@@ -57,7 +57,13 @@ body{
   position:absolute; inset:0;
   display:flex; flex-direction:column; justify-content:center; align-items:center;
   padding: 6vh 9vw;
-  background: var(--bg);
+  /* Fondo tipo Apple Keynote: base blanca con brillos azules muy sutiles
+     en esquinas opuestas y un degradado vertical casi imperceptible.
+     Se mantiene fiel a la paleta (blanco + azul de marca). */
+  background:
+    radial-gradient(1200px 820px at 12% -8%, rgba(0,113,227,0.07), transparent 58%),
+    radial-gradient(1050px 760px at 108% 112%, rgba(10,61,145,0.06), transparent 56%),
+    linear-gradient(180deg, #ffffff 0%, #f5f8fd 100%);
   opacity:0; transform: translateX(32px);
   pointer-events:none;
   transition: opacity .5s ease, transform .5s ease;
@@ -74,10 +80,11 @@ body{
   color: var(--blue);
   font-weight:600;
   margin-bottom: 14px;
+  text-align:center;
 }
 .eyebrow::after{
   content:""; display:block; width:32px; height:2px; background:var(--blue);
-  margin-top:12px; border-radius:2px; opacity:.55;
+  margin:12px auto 0; border-radius:2px; opacity:.55;
 }
 h1.slide-title{
   font-size: clamp(1.9rem, 3.6vw, 3.1rem);
@@ -85,24 +92,27 @@ h1.slide-title{
   line-height:1.14;
   letter-spacing:-0.02em;
   color: var(--ink);
-  margin-bottom: 20px;
-  max-width: 17ch;
+  margin: 0 auto 20px;
+  max-width: 20ch;
   text-wrap: balance;
+  text-align:center;
 }
 p.lede{
   font-size: clamp(1.05rem, 1.5vw, 1.35rem);
   line-height:1.5;
   color: var(--ink-soft);
   max-width: 50ch;
-  margin-bottom: 12px;
+  margin: 0 auto 12px;
   font-weight:400;
+  text-align:center;
 }
 .source-note{
   font-size:.78rem;
   color: var(--gray);
   max-width: 56ch;
-  margin-top: 8px;
+  margin: 8px auto 0;
   line-height:1.5;
+  text-align:center;
 }
 .big-quote{
   font-size: clamp(1.2rem, 2vw, 1.7rem);
@@ -111,6 +121,8 @@ p.lede{
   color: var(--blue-deep);
   max-width: 34ch;
   letter-spacing:-0.01em;
+  margin-left:auto; margin-right:auto;
+  text-align:center;
 }
 .rule{ width:100%; height:1px; background:var(--hairline); margin: 26px 0; border:none; }
 
@@ -136,8 +148,14 @@ p.lede{
   border: 1px solid var(--hairline);
   border-radius: var(--radius);
   padding: 26px 24px;
+  box-shadow: var(--shadow);
 }
 .col-card .icon-plate{ margin-bottom:16px; }
+.col-card .tag{
+  display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.1em;
+  text-transform:uppercase; color: var(--blue); background: var(--blue-tint);
+  padding:3px 11px; border-radius:999px; margin-bottom:10px;
+}
 .col-card h3{ font-size:1.08rem; font-weight:600; color: var(--ink); margin-bottom:12px; letter-spacing:-0.01em; }
 .col-card ul{ list-style:none; }
 .col-card li{
@@ -159,7 +177,7 @@ p.lede{
 
 /* before/after */
 .ba-wrap{ display:flex; gap:22px; margin-top:30px; width:100%; flex-wrap:wrap; }
-.ba-box{ flex:1; min-width:260px; border-radius: var(--radius); padding: 26px; border:1px solid var(--hairline); }
+.ba-box{ flex:1; min-width:260px; border-radius: var(--radius); padding: 26px; border:1px solid var(--hairline); box-shadow: var(--shadow); }
 .ba-box.after{ background: var(--blue-tint); border-color: var(--blue-border); }
 .ba-label{ font-size:.75rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gray); margin-bottom:10px; font-weight:600; }
 .ba-box.after .ba-label{ color: var(--blue); }
@@ -171,6 +189,7 @@ p.lede{
 .split-half{
   flex:1; padding: 26px 20px; border-radius: var(--radius); border:1px solid var(--hairline);
   display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;
+  box-shadow: var(--shadow);
 }
 .split-half.day{ background: var(--blue-tint); border-color: var(--blue-border); }
 .split-caption b{ display:block; font-size:.98rem; font-weight:600; color:var(--ink); margin-bottom:3px; }
@@ -207,12 +226,12 @@ table.compare td.col-miracle{ color: var(--blue-deep); font-weight:600; }
 }
 
 /* tag chips */
-.chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; justify-content:center; }
 .chip{ padding:8px 16px; border-radius:999px; font-size:.83rem; font-weight:600; background:transparent; border:1px solid var(--blue-border); color: var(--blue-deep); }
 
 /* team grid */
 .team-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:18px; margin-top:26px; width:100%; }
-.team-card{ border-radius:var(--radius); padding:20px; background: var(--bg); border:1px solid var(--hairline); display:flex; gap:16px; align-items:flex-start; }
+.team-card{ border-radius:var(--radius); padding:20px; background: var(--bg); border:1px solid var(--hairline); display:flex; gap:16px; align-items:flex-start; box-shadow: var(--shadow); }
 .team-card .cap{ font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--blue); margin-bottom:6px; font-weight:700; }
 .team-card .name{ font-weight:700; font-size:1rem; color:var(--ink); }
 .team-card .role{ font-size:.85rem; color:var(--gray); margin-top:1px; }
@@ -238,7 +257,7 @@ table.invest td.amount{ color:var(--blue); font-weight:700; white-space:nowrap; 
 #logo-slot .dot{ width:7px; height:7px; border-radius:50%; background:var(--blue); }
 /* PLACEHOLDER: reemplazar el texto "Miracle" por <img src="logo-miracle.svg" style="height:20px"> cuando tengas el logo final */
 
-#progress-bar{ position:fixed; top:0; left:0; height:3px; background: var(--blue); z-index:30; transition: width .4s ease; width: 8.33%; }
+#progress-bar{ position:fixed; top:0; left:0; height:3px; background: var(--blue); z-index:30; transition: width .4s ease; width: 10%; }
 
 #slide-counter{
   position:fixed; bottom:28px; right:38px; z-index:20;
@@ -289,7 +308,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 
 <div id="progress-bar"></div>
 <div id="logo-slot"><span class="dot"></span>Miracle</div>
-<div id="slide-counter">01 / 12</div>
+<div id="slide-counter">01 / 10</div>
 
 <div class="nav-zone left" onclick="goTo(current-1)"></div>
 <div class="nav-zone right" onclick="goTo(current+1)"></div>
@@ -456,7 +475,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   <section class="slide" data-index="4">
     <div class="slide-inner">
       <div class="eyebrow">La solución</div>
-      <h1 class="slide-title">Miracle: IA para documentar consultas médicas desde la voz.</h1>
+      <h1 class="slide-title">Miracle documenta la consulta mientras el médico atiende.</h1>
       <p class="lede">Miracle escucha la conversación médico-paciente y ayuda a convertirla en información clínica organizada, lista para ser revisada y utilizada por el médico.</p>
 
       <div class="flow">
@@ -471,25 +490,8 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 5 — Cómo funciona ================= -->
+  <!-- ================= SLIDE 5 — Diferencial ================= -->
   <section class="slide" data-index="5">
-    <div class="slide-inner">
-      <div class="eyebrow">Cómo funciona</div>
-      <h1 class="slide-title">Del diálogo clínico a información estructurada.</h1>
-
-      <div class="steps">
-        <div class="step"><div class="step-num">01</div><div class="step-text">El médico conversa normalmente con el paciente.</div></div>
-        <div class="step"><div class="step-num">02</div><div class="step-text">Miracle captura la voz.</div></div>
-        <div class="step"><div class="step-num">03</div><div class="step-text">La IA identifica datos clínicos relevantes.</div></div>
-        <div class="step"><div class="step-num">04</div><div class="step-text">Organiza la información en formato útil.</div></div>
-        <div class="step"><div class="step-num">05</div><div class="step-text">El médico revisa, edita y aprueba.</div></div>
-      </div>
-      <p class="big-quote" style="margin-top:28px;">El médico siempre mantiene el control.</p>
-    </div>
-  </section>
-
-  <!-- ================= SLIDE 6 — Diferencial ================= -->
-  <section class="slide" data-index="6">
     <div class="slide-inner">
       <div class="eyebrow">Diferencial</div>
       <h1 class="slide-title">No somos un transcriptor. Somos documentación clínica inteligente.</h1>
@@ -506,46 +508,31 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 7 — PMV / demo (la más visual) ================= -->
-  <section class="slide" data-index="7">
+  <!-- ================= SLIDE 6 — Clientes B2C / B2B ================= -->
+  <section class="slide" data-index="6">
     <div class="slide-inner">
-      <div class="eyebrow">Producto mínimo viable</div>
-      <h1 class="slide-title">Ya tenemos un PMV funcional en desarrollo.</h1>
-      <p class="lede">Nuestro PMV ya demuestra el flujo principal: captura de voz, procesamiento con IA y organización de información clínica.</p>
-
-      <div class="pmv-grid">
-        <!-- PLACEHOLDER: reemplazar por <img src="captura1.png"> con una captura real del prototipo -->
-        <div class="shot-placeholder">Captura 1<br>del prototipo</div>
-        <!-- PLACEHOLDER: reemplazar por <img src="captura2.png"> con una captura real del prototipo -->
-        <div class="shot-placeholder">Captura 2<br>del prototipo</div>
-        <!-- PLACEHOLDER: reemplazar por <video controls poster="video-poster.jpg" src="demo-miracle.mp4"></video> — video de 30-40s -->
-        <div class="video-placeholder">
-          <div class="icon-plate sm"><svg><use href="#icon-mic"/></svg></div>
-          Video demo (30–40 seg)
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= SLIDE 8 — Cliente y mercado ================= -->
-  <section class="slide" data-index="8">
-    <div class="slide-inner">
-      <div class="eyebrow">Cliente y mercado</div>
-      <h1 class="slide-title">Nuestro primer mercado: médicos y clínicas con alta carga documental.</h1>
+      <div class="eyebrow">Nuestros clientes</div>
+      <h1 class="slide-title">El médico lo usa. La clínica lo compra.</h1>
 
       <div class="cols">
         <div class="col-card">
           <div class="icon-plate sm"><svg><use href="#icon-user"/></svg></div>
-          <h3>Usuario</h3>
-          <ul><li>Médicos y profesionales de salud.</li></ul>
+          <span class="tag">B2C</span>
+          <h3>El médico</h3>
+          <ul>
+            <li>Médicos y especialistas independientes.</li>
+            <li>Consultorios propios.</li>
+            <li>Suscripción individual por médico.</li>
+          </ul>
         </div>
         <div class="col-card">
           <div class="icon-plate sm"><svg><use href="#icon-building"/></svg></div>
-          <h3>Comprador</h3>
+          <span class="tag">B2B</span>
+          <h3>Clínicas e instituciones</h3>
           <ul>
-            <li>Clínicas e IPS.</li>
-            <li>Consultorios privados.</li>
-            <li>Directores médicos y gerentes administrativos.</li>
+            <li>Clínicas, IPS y centros médicos.</li>
+            <li>Consultorios con varios profesionales.</li>
+            <li>Directores médicos y gerentes que aprueban la compra.</li>
           </ul>
         </div>
       </div>
@@ -558,11 +545,11 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 9 — Modelo de negocio ================= -->
-  <section class="slide" data-index="9">
+  <!-- ================= SLIDE 7 — Modelo de negocio ================= -->
+  <section class="slide" data-index="7">
     <div class="slide-inner">
       <div class="eyebrow">Modelo de negocio</div>
-      <h1 class="slide-title">Ingresos recurrentes por uso médico e institucional.</h1>
+      <h1 class="slide-title">Cada médico y cada clínica generan ingreso recurrente.</h1>
 
       <div class="cols" style="margin-top:30px;">
         <div class="col-card" style="text-align:center;">
@@ -580,21 +567,16 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
           <h3 style="margin-bottom:4px;">Plan institucional</h3>
           <p style="font-size:.88rem;color:var(--gray);">Por número de usuarios.</p>
         </div>
-        <div class="col-card" style="text-align:center;">
-          <div class="icon-plate sm" style="margin:0 auto 14px;"><svg><use href="#icon-repeat"/></svg></div>
-          <h3 style="margin-bottom:4px;">Implementación y soporte</h3>
-          <p style="font-size:.88rem;color:var(--gray);">Para clínicas.</p>
-        </div>
       </div>
       <p class="big-quote" style="margin-top:26px;">Empezamos con pilotos controlados y escalamos hacia contratos institucionales.</p>
     </div>
   </section>
 
-  <!-- ================= SLIDE 10 — Equipo ================= -->
-  <section class="slide" data-index="10">
+  <!-- ================= SLIDE 8 — Equipo ================= -->
+  <section class="slide" data-index="8">
     <div class="slide-inner">
       <div class="eyebrow">Equipo</div>
-      <h1 class="slide-title">Equipo con capacidad técnica, comercial y sectorial.</h1>
+      <h1 class="slide-title">El equipo para construir, vender y validar en salud.</h1>
 
       <!-- PLACEHOLDER: reemplazar "[Nombre]" por los nombres reales del equipo -->
       <div class="team-grid">
@@ -619,8 +601,8 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 11 — Uso del incentivo ================= -->
-  <section class="slide" data-index="11">
+  <!-- ================= SLIDE 9 — Uso del incentivo ================= -->
+  <section class="slide" data-index="9">
     <div class="slide-inner">
       <div class="eyebrow">Uso del incentivo</div>
       <h1 class="slide-title">Con $15M pasaremos de PMV funcional a piloto validado.</h1>
@@ -638,8 +620,8 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 12 — Cierre ================= -->
-  <section class="slide" data-index="12">
+  <!-- ================= SLIDE 10 — Cierre ================= -->
+  <section class="slide" data-index="10">
     <div class="slide-inner" style="text-align:center; display:flex; flex-direction:column; align-items:center;">
       <div class="icon-plate lg" style="margin-bottom:22px;"><svg><use href="#icon-heart"/></svg></div>
       <div class="eyebrow" style="display:flex;flex-direction:column;align-items:center;">Miracle · Capital Semilla 2026</div>
@@ -655,7 +637,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 /* ============================================================
    Controlador de navegación del deck.
    ============================================================ */
-const TOTAL = 12;
+const TOTAL = 10;
 let current = 1;
 
 const slides = document.querySelectorAll('.slide');
