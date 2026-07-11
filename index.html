@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Miracle — Capital Semilla 2026</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230071e3'/%3E%3Cpath d='M10 36h10l5-12 8 22 6-16 4 6h11' fill='none' stroke='white' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <style>
 /* ============================================================
    MIRACLE — PITCH CAPITAL SEMILLA 2026
@@ -13,10 +14,16 @@
 
    Cómo editar este archivo:
    - Textos: busca "SLIDE N" en el HTML más abajo.
+   - Guión del pitch: cada slide tiene un comentario "GUIÓN" con
+     lo que se dice en voz alta (~25 s por slide ≈ pitch de 5-6 min).
    - Colores: cambia las variables en :root.
    - Logo / capturas / video / equipo / montos: busca "PLACEHOLDER".
    - Navegación: flechas del teclado (← →), espacio, clic en los
-     bordes laterales, o los puntos inferiores.
+     bordes laterales, los puntos inferiores, o tecla F para
+     pantalla completa.
+   - Exportar a PDF: Archivo → Imprimir → "Guardar como PDF",
+     orientación horizontal y activando "Gráficos de fondo".
+     Cada slide sale en su propia página.
 
    Nota de diseño: este deck se deja fijo en tema claro (blanco/azul)
    a propósito — es la identidad de la marca para el pitch y debe
@@ -35,7 +42,7 @@
   --blue-tint:rgba(0,113,227,0.07);
   --blue-tint-strong:rgba(0,113,227,0.13);
   --blue-border:rgba(0,113,227,0.28);
-  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 14px 30px rgba(20,30,50,.06);
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 18px 40px rgba(20,30,50,.08);
   --font-main: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Helvetica, Arial, sans-serif;
   --radius: 20px;
 }
@@ -44,7 +51,14 @@
 html,body{ height:100%; }
 body{
   font-family: var(--font-main);
-  background: var(--bg);
+  /* Fondo base compartido por todo el deck: los slides son
+     transparentes y este degradado permanece estable entre
+     transiciones (estilo Keynote). */
+  background:
+    radial-gradient(1300px 900px at 10% -10%, rgba(0,113,227,0.10), transparent 60%),
+    radial-gradient(1200px 850px at 110% 115%, rgba(10,61,145,0.09), transparent 58%),
+    radial-gradient(900px 600px at 85% -5%, rgba(0,113,227,0.05), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f2f6fc 100%);
   color: var(--ink);
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
@@ -53,22 +67,57 @@ body{
 /* ---------- deck shell ---------- */
 #deck{ position:relative; width:100vw; height:100vh; }
 
+/* Retícula de puntos sutil sobre el fondo, desvanecida hacia los
+   bordes para que no compita con el contenido. */
+#deck::before{
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image: radial-gradient(circle, rgba(10,61,145,0.10) 1px, transparent 1.5px);
+  background-size: 30px 30px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+          mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
+  opacity:.5;
+}
+
+/* Línea de pulso (ECG) — identidad salud, casi imperceptible. */
+.ecg-line{
+  position:absolute; left:0; right:0; bottom:7.5vh; z-index:0;
+  width:100%; height:54px; pointer-events:none;
+  color: var(--blue-deep); opacity:.07;
+}
+
 .slide{
   position:absolute; inset:0;
   display:flex; flex-direction:column; justify-content:center; align-items:center;
   padding: 6vh 9vw;
-  /* Fondo tipo Apple Keynote: base blanca con brillos azules muy sutiles
-     en esquinas opuestas y un degradado vertical casi imperceptible.
-     Se mantiene fiel a la paleta (blanco + azul de marca). */
-  background:
-    radial-gradient(1200px 820px at 12% -8%, rgba(0,113,227,0.07), transparent 58%),
-    radial-gradient(1050px 760px at 108% 112%, rgba(10,61,145,0.06), transparent 56%),
-    linear-gradient(180deg, #ffffff 0%, #f5f8fd 100%);
-  opacity:0; transform: translateX(32px);
+  opacity:0; transform: translateX(32px) scale(.985);
   pointer-events:none;
-  transition: opacity .5s ease, transform .5s ease;
+  transition: opacity .45s ease, transform .45s ease;
 }
-.slide.active{ opacity:1; transform: translateX(0); pointer-events:auto; }
+.slide.active{ opacity:1; transform: translateX(0) scale(1); pointer-events:auto; transition-delay:.06s; }
+
+/* Orbes decorativos por slide — degradados radiales suaves (sin
+   filtros de blur: mismo efecto, mucho más liviano). Alternan de
+   posición para que cada slide respire distinto. */
+.slide::before, .slide::after{
+  content:""; position:absolute; z-index:0; pointer-events:none;
+  border-radius:50%;
+}
+.slide::before{
+  width:52vw; height:52vw; top:-20vw; left:-14vw;
+  background: radial-gradient(closest-side, rgba(0,113,227,0.12), transparent 72%);
+  animation: orb-a 16s ease-in-out infinite alternate;
+}
+.slide::after{
+  width:46vw; height:46vw; bottom:-18vw; right:-12vw;
+  background: radial-gradient(closest-side, rgba(10,61,145,0.10), transparent 72%);
+  animation: orb-b 19s ease-in-out infinite alternate;
+}
+.slide:nth-of-type(even)::before{ left:auto; right:-16vw; top:-24vw; }
+.slide:nth-of-type(even)::after{ right:auto; left:-14vw; bottom:-20vw; }
+.slide:nth-of-type(3n)::before{ width:44vw; height:44vw; }
+.slide:nth-of-type(3n)::after{ width:56vw; height:56vw; }
+@keyframes orb-a{ from{ transform: translate(0,0); } to{ transform: translate(3.5vw, 2.5vh); } }
+@keyframes orb-b{ from{ transform: translate(0,0); } to{ transform: translate(-3vw, -3vh); } }
 
 .slide-inner{ position:relative; z-index:1; width:100%; max-width:1080px; }
 
@@ -93,38 +142,54 @@ h1.slide-title{
   letter-spacing:-0.02em;
   color: var(--ink);
   margin: 0 auto 20px;
-  max-width: 20ch;
+  max-width: 22ch;
   text-wrap: balance;
   text-align:center;
+}
+/* Palabra clave con degradado azul (usar con moderación). */
+.kw{
+  background: linear-gradient(115deg, var(--blue) 10%, var(--blue-deep) 90%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
 }
 p.lede{
   font-size: clamp(1.05rem, 1.5vw, 1.35rem);
   line-height:1.5;
   color: var(--ink-soft);
-  max-width: 50ch;
+  max-width: 52ch;
   margin: 0 auto 12px;
   font-weight:400;
   text-align:center;
 }
 .source-note{
-  font-size:.78rem;
+  font-size:.75rem;
   color: var(--gray);
-  max-width: 56ch;
-  margin: 8px auto 0;
+  max-width: 66ch;
+  margin: 14px auto 0;
   line-height:1.5;
   text-align:center;
 }
 .big-quote{
-  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
   font-weight:600;
   line-height:1.4;
   color: var(--blue-deep);
-  max-width: 34ch;
+  max-width: 40ch;
   letter-spacing:-0.01em;
   margin-left:auto; margin-right:auto;
   text-align:center;
 }
 .rule{ width:100%; height:1px; background:var(--hairline); margin: 26px 0; border:none; }
+
+/* Variante compacta para slides con mucho contenido (p. ej. la
+   matriz de competencia): todo un punto más apretado para que
+   quepa en pantalla sin recortar el encabezado ni las fuentes. */
+.slide.dense .eyebrow{ margin-bottom:8px; }
+.slide.dense h1.slide-title{ font-size: clamp(1.55rem, 2.8vw, 2.4rem); margin-bottom:10px; }
+.slide.dense .table-scroll{ margin-top:14px; }
+.slide.dense table.compare th, .slide.dense table.compare td{ padding: 9px 12px; font-size:.8rem; }
+.slide.dense .big-quote{ font-size: clamp(.98rem, 1.4vw, 1.22rem); max-width:62ch; }
+.slide.dense .source-note{ margin-top:8px; font-size:.68rem; }
 
 /* ---------- icon system ---------- */
 .icon-plate{
@@ -141,34 +206,69 @@ p.lede{
 .icon-plate.lg svg{ width:34px; height:34px; }
 
 /* ---------- generic layout helpers ---------- */
-.cols{ display:flex; gap:26px; width:100%; margin-top: 28px; flex-wrap:wrap; }
+.cols{ display:flex; gap:24px; width:100%; margin-top: 26px; flex-wrap:wrap; }
 .col-card{
   flex:1; min-width:220px;
   background: var(--bg);
   border: 1px solid var(--hairline);
   border-radius: var(--radius);
-  padding: 26px 24px;
+  padding: 24px 22px;
   box-shadow: var(--shadow);
+  position:relative; overflow:hidden;
 }
-.col-card .icon-plate{ margin-bottom:16px; }
+/* Línea de acento superior en las tarjetas. */
+.col-card::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, var(--blue), rgba(0,113,227,0));
+  opacity:.55;
+}
+.col-card .icon-plate{ margin-bottom:14px; }
 .col-card .tag{
   display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.1em;
   text-transform:uppercase; color: var(--blue); background: var(--blue-tint);
   padding:3px 11px; border-radius:999px; margin-bottom:10px;
 }
-.col-card h3{ font-size:1.08rem; font-weight:600; color: var(--ink); margin-bottom:12px; letter-spacing:-0.01em; }
+.col-card h3{ font-size:1.06rem; font-weight:600; color: var(--ink); margin-bottom:10px; letter-spacing:-0.01em; }
 .col-card ul{ list-style:none; }
 .col-card li{
-  font-size: .96rem; line-height:1.6; color: var(--ink-soft);
-  padding-left: 14px; position:relative; margin-bottom:7px;
+  font-size: .94rem; line-height:1.55; color: var(--ink-soft);
+  padding-left: 14px; position:relative; margin-bottom:6px;
 }
 .col-card li::before{
   content:""; position:absolute; left:0; top:.62em;
   width:5px; height:5px; border-radius:50%; background: var(--blue);
 }
+/* Número grande para tarjetas de "por qué ahora". */
+.col-card .idx{
+  font-size:1.9rem; font-weight:200; color:var(--blue);
+  font-variant-numeric: tabular-nums; line-height:1; margin-bottom:10px; display:block;
+}
+.col-card p.card-body{ font-size:.94rem; line-height:1.55; color:var(--ink-soft); }
+
+/* franja de cifras hero */
+.stat-row{ display:flex; gap:22px; width:100%; margin-top:26px; flex-wrap:wrap; }
+.stat{
+  flex:1; min-width:180px; text-align:center;
+  padding: 20px 14px;
+  border-radius: var(--radius);
+  background: var(--bg);
+  border:1px solid var(--hairline);
+  box-shadow: var(--shadow);
+}
+.stat .num{
+  display:block;
+  font-size: clamp(1.9rem, 3.4vw, 2.9rem);
+  font-weight:700; letter-spacing:-0.02em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(115deg, var(--blue) 10%, var(--blue-deep) 90%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
+  line-height:1.1; margin-bottom:6px;
+}
+.stat .lbl{ font-size:.85rem; color:var(--gray); line-height:1.4; display:block; }
 
 /* flow diagram */
-.flow{ display:flex; align-items:flex-start; gap:6px; margin-top:38px; width:100%; }
+.flow{ display:flex; align-items:flex-start; gap:6px; margin-top:32px; width:100%; }
 .flow-step{ flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; gap:12px; }
 .flow-step .icon-plate{ margin:0 auto; }
 .flow-step span{ font-weight:600; font-size:.92rem; color:var(--ink); }
@@ -176,44 +276,50 @@ p.lede{
 .flow-arrow svg{ width:20px; height:20px; stroke:var(--blue); opacity:.5; }
 
 /* before/after */
-.ba-wrap{ display:flex; gap:22px; margin-top:30px; width:100%; flex-wrap:wrap; }
-.ba-box{ flex:1; min-width:260px; border-radius: var(--radius); padding: 26px; border:1px solid var(--hairline); box-shadow: var(--shadow); }
+.ba-wrap{ display:flex; gap:22px; margin-top:28px; width:100%; flex-wrap:wrap; }
+.ba-box{ flex:1; min-width:260px; border-radius: var(--radius); padding: 22px 24px; border:1px solid var(--hairline); box-shadow: var(--shadow); background:var(--bg); }
 .ba-box.after{ background: var(--blue-tint); border-color: var(--blue-border); }
-.ba-label{ font-size:.75rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gray); margin-bottom:10px; font-weight:600; }
+.ba-label{ font-size:.75rem; text-transform:uppercase; letter-spacing:.12em; color:var(--gray); margin-bottom:8px; font-weight:600; }
 .ba-box.after .ba-label{ color: var(--blue); }
-.ba-box p{ font-size:1.02rem; line-height:1.5; color:var(--ink-soft); }
+.ba-box p{ font-size:1rem; line-height:1.5; color:var(--ink-soft); }
 .ba-box.after p{ color: var(--blue-deep); font-weight:500; }
 
 /* split hero visual (slide 1) */
-.split-visual{ display:flex; gap:18px; width:100%; margin-top:36px; }
+.split-visual{ display:flex; gap:18px; width:100%; margin-top:34px; }
 .split-half{
-  flex:1; padding: 26px 20px; border-radius: var(--radius); border:1px solid var(--hairline);
+  flex:1; padding: 24px 20px; border-radius: var(--radius); border:1px solid var(--hairline);
   display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow); background:var(--bg);
 }
 .split-half.day{ background: var(--blue-tint); border-color: var(--blue-border); }
 .split-caption b{ display:block; font-size:.98rem; font-weight:600; color:var(--ink); margin-bottom:3px; }
 .split-caption span{ font-size:.85rem; color: var(--gray); }
 
-/* comparison table */
-table.compare{ width:100%; border-collapse:collapse; margin-top:26px; }
-table.compare th, table.compare td{ padding: 13px 16px; text-align:left; font-size:.94rem; border-bottom: 1px solid var(--hairline); }
-table.compare th{ color: var(--gray); font-weight:600; font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; }
-table.compare td:first-child{ color: var(--gray); }
-table.compare td.col-miracle{ color: var(--blue-deep); font-weight:600; }
+/* comparison / matriz de competencia */
+.table-scroll{ width:100%; overflow-x:auto; margin-top:24px; border-radius:var(--radius); border:1px solid var(--hairline); background:var(--bg); box-shadow:var(--shadow); }
+table.compare{ width:100%; border-collapse:collapse; min-width:760px; }
+table.compare th, table.compare td{ padding: 11px 14px; text-align:left; font-size:.85rem; border-bottom: 1px solid var(--hairline); line-height:1.4; }
+table.compare tr:last-child td{ border-bottom:none; }
+table.compare th{ color: var(--gray); font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; background:rgba(245,248,253,.7); }
+table.compare td:first-child, table.compare th:first-child{ color: var(--gray); font-weight:600; }
+table.compare .col-miracle{ color: var(--blue-deep); font-weight:600; background: var(--blue-tint); }
+table.compare th.col-miracle{ color: var(--blue); }
+table.compare .yes{ color:var(--blue); font-weight:700; margin-right:6px; }
+table.compare .no{ color:var(--gray); opacity:.7; }
 
 /* numbered steps */
-.steps{ display:flex; flex-direction:column; margin-top:28px; width:100%; }
-.step{ display:flex; gap:20px; align-items:center; padding: 11px 0; border-bottom:1px solid var(--hairline); }
+.steps{ display:flex; flex-direction:column; margin-top:24px; width:100%; }
+.step{ display:flex; gap:20px; align-items:center; padding: 10px 0; border-bottom:1px solid var(--hairline); }
 .step:last-child{ border-bottom:none; }
 .step-num{
-  flex-shrink:0; width:44px; font-weight:200; font-size:2.1rem; color: var(--blue);
+  flex-shrink:0; width:44px; font-weight:200; font-size:2rem; color: var(--blue);
   font-variant-numeric: tabular-nums; line-height:1;
 }
-.step-text{ font-size:1.02rem; color: var(--ink); }
+.step-text{ font-size:1rem; color: var(--ink); line-height:1.45; }
+.step-text b{ color:var(--blue-deep); }
 
 /* PMV / demo grid */
-.pmv-grid{ display:flex; gap:18px; margin-top:26px; width:100%; }
+.pmv-grid{ display:flex; gap:18px; margin-top:24px; width:100%; }
 .shot-placeholder{
   flex:1; aspect-ratio: 4/3; border:1.5px dashed var(--blue-border); border-radius: var(--radius);
   display:flex; align-items:center; justify-content:center; color: var(--blue); font-size:.85rem;
@@ -225,27 +331,79 @@ table.compare td.col-miracle{ color: var(--blue-deep); font-weight:600; }
   color: var(--blue); font-size:.85rem; text-align:center; background: var(--blue-tint); font-weight:500;
 }
 
+/* mini nota SOAP ilustrativa */
+.note-mock{
+  flex:1; border-radius:var(--radius); border:1px solid var(--hairline); background:var(--bg);
+  box-shadow:var(--shadow); padding:16px 18px; text-align:left; position:relative; overflow:hidden;
+}
+.note-mock::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--blue), rgba(0,113,227,0)); opacity:.55;
+}
+.note-mock .nm-tag{
+  display:inline-block; font-size:.62rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--blue); background:var(--blue-tint); padding:2px 9px; border-radius:999px; margin-bottom:10px;
+}
+.note-mock .nm-line{ font-size:.78rem; line-height:1.5; color:var(--ink-soft); margin-bottom:7px; }
+.note-mock .nm-line b{ color:var(--blue-deep); font-weight:700; margin-right:4px; }
+
+/* embudo de mercado TAM / SAM / SOM */
+.funnel{ display:flex; flex-direction:column; align-items:center; gap:12px; margin-top:26px; width:100%; }
+.f-tier{
+  border-radius: 16px; padding:16px 26px;
+  display:flex; align-items:baseline; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  border:1px solid var(--blue-border);
+  background: var(--bg);
+  box-shadow: var(--shadow);
+}
+.f-tier.t1{ width:100%; background:var(--bg); }
+.f-tier.t2{ width:76%; background:var(--blue-tint); }
+.f-tier.t3{ width:52%; background:var(--blue-tint-strong); }
+.f-tier .f-scope{ font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--blue); }
+.f-tier .f-name{ font-size:.98rem; font-weight:600; color:var(--ink); }
+.f-tier .f-num{
+  font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight:700; letter-spacing:-0.01em;
+  font-variant-numeric: tabular-nums; color:var(--blue-deep); white-space:nowrap;
+}
+.f-tier .f-sub{ font-size:.8rem; color:var(--gray); width:100%; }
+
+/* franja de seguridad / cumplimiento */
+.assure{
+  display:flex; align-items:center; gap:16px; margin-top:26px; width:100%;
+  border-radius: var(--radius); border:1px solid var(--blue-border);
+  background: var(--blue-tint); padding: 16px 22px; text-align:left;
+}
+.assure p{ font-size:.95rem; color:var(--blue-deep); font-weight:500; line-height:1.5; }
+
 /* tag chips */
 .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; justify-content:center; }
-.chip{ padding:8px 16px; border-radius:999px; font-size:.83rem; font-weight:600; background:transparent; border:1px solid var(--blue-border); color: var(--blue-deep); }
+.chip{ padding:8px 16px; border-radius:999px; font-size:.83rem; font-weight:600; background:rgba(255,255,255,.75); border:1px solid var(--blue-border); color: var(--blue-deep); }
 
 /* team grid */
 .team-grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:18px; margin-top:26px; width:100%; }
-.team-card{ border-radius:var(--radius); padding:20px; background: var(--bg); border:1px solid var(--hairline); display:flex; gap:16px; align-items:flex-start; box-shadow: var(--shadow); }
+.team-card{ border-radius:var(--radius); padding:20px; background: var(--bg); border:1px solid var(--hairline); display:flex; gap:16px; align-items:flex-start; box-shadow: var(--shadow); position:relative; overflow:hidden; }
+.team-card::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, var(--blue), rgba(0,113,227,0)); opacity:.55;
+}
 .team-card .cap{ font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--blue); margin-bottom:6px; font-weight:700; }
 .team-card .name{ font-weight:700; font-size:1rem; color:var(--ink); }
 .team-card .role{ font-size:.85rem; color:var(--gray); margin-top:1px; }
 
 /* investment table */
-table.invest{ width:100%; border-collapse:collapse; margin-top:24px; }
+table.invest{ width:100%; border-collapse:collapse; margin-top:24px; background:var(--bg); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); }
 table.invest th, table.invest td{ padding:12px 14px; font-size:.9rem; text-align:left; border-bottom:1px solid var(--hairline); }
-table.invest th{ color:var(--gray); text-transform:uppercase; font-size:.72rem; letter-spacing:.06em; }
+table.invest tr:last-child td{ border-bottom:none; }
+table.invest th{ color:var(--gray); text-transform:uppercase; font-size:.72rem; letter-spacing:.06em; background:rgba(245,248,253,.7); }
 table.invest td.amount{ color:var(--blue); font-weight:700; white-space:nowrap; font-variant-numeric: tabular-nums; }
 
 /* closing slide */
 .closing-phrase{
   font-size: clamp(1.5rem, 2.6vw, 2.3rem);
-  font-weight:700; color:var(--blue-deep); margin-top:22px; max-width:22ch; line-height:1.3; letter-spacing:-0.01em;
+  font-weight:700; margin-top:22px; max-width:22ch; line-height:1.3; letter-spacing:-0.01em;
+  background: linear-gradient(115deg, var(--blue) 10%, var(--blue-deep) 90%);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent; color:transparent;
 }
 
 /* ---------- chrome: logo / progress / nav ---------- */
@@ -257,7 +415,7 @@ table.invest td.amount{ color:var(--blue); font-weight:700; white-space:nowrap; 
 #logo-slot .dot{ width:7px; height:7px; border-radius:50%; background:var(--blue); }
 /* PLACEHOLDER: reemplazar el texto "Miracle" por <img src="logo-miracle.svg" style="height:20px"> cuando tengas el logo final */
 
-#progress-bar{ position:fixed; top:0; left:0; height:3px; background: var(--blue); z-index:30; transition: width .4s ease; width: 10%; }
+#progress-bar{ position:fixed; top:0; left:0; height:3px; background: linear-gradient(90deg, var(--blue), var(--blue-deep)); z-index:30; transition: width .4s ease; width: 8%; }
 
 #slide-counter{
   position:fixed; bottom:28px; right:38px; z-index:20;
@@ -267,7 +425,7 @@ table.invest td.amount{ color:var(--blue); font-weight:700; white-space:nowrap; 
 #dots{ position:fixed; bottom:28px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:20; }
 #dots button{
   width:7px; height:7px; border-radius:50%; border:none; cursor:pointer;
-  background: var(--hairline); transition: background .3s, transform .3s; padding:0;
+  background: #d4d8e0; transition: background .3s, transform .3s; padding:0;
 }
 #dots button.active{ background: var(--blue); transform:scale(1.35); }
 
@@ -287,9 +445,10 @@ table.invest td.amount{ color:var(--blue); font-weight:700; white-space:nowrap; 
 /* responsive */
 @media (max-width: 820px){
   .slide{ padding: 5vh 6vw; }
-  .cols, .ba-wrap, .pmv-grid, .split-visual, .flow{ flex-direction:column; }
+  .cols, .ba-wrap, .pmv-grid, .split-visual, .flow, .stat-row{ flex-direction:column; }
   .flow-arrow{ transform:rotate(90deg); padding:2px 0; align-self:center; }
   .team-grid{ grid-template-columns: 1fr; }
+  .f-tier.t2{ width:92%; } .f-tier.t3{ width:84%; }
   .nav-arrow{ display:none; }
   #logo-slot{ top:16px; left:18px; font-size:.8rem; }
   #slide-counter{ bottom:14px; right:18px; }
@@ -301,6 +460,26 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 
 @media (prefers-reduced-motion: reduce){
   .slide{ transition:none; }
+  .slide::before, .slide::after{ animation:none; }
+}
+
+/* ---------- impresión / exportar a PDF ----------
+   Cada slide sale en su propia página horizontal.
+   En el diálogo de impresión: activar "Gráficos de fondo". */
+@media print{
+  @page{ size: A4 landscape; margin: 0; }
+  html, body{ overflow:visible; height:auto; background:#fff; }
+  #deck{ width:auto; height:auto; }
+  #deck::before, .ecg-line{ display:none; }
+  .slide{
+    position:relative; inset:auto;
+    opacity:1 !important; transform:none !important;
+    page-break-after: always; break-after: page;
+    height:100vh; min-height:100vh;
+  }
+  .slide::before, .slide::after{ display:none; }
+  #progress-bar, #dots, #slide-counter, .nav-zone, .nav-arrow{ display:none !important; }
+  #logo-slot{ position:absolute; }
 }
 </style>
 </head>
@@ -308,7 +487,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 
 <div id="progress-bar"></div>
 <div id="logo-slot"><span class="dot"></span>Miracle</div>
-<div id="slide-counter">01 / 10</div>
+<div id="slide-counter">01 / 13</div>
 
 <div class="nav-zone left" onclick="goTo(current-1)"></div>
 <div class="nav-zone right" onclick="goTo(current+1)"></div>
@@ -388,37 +567,58 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     <path d="M21 12.3h-3.2l-1.8 4.6-4-9.6-1.8 5H3"/>
     <path d="M12 5.2c1.4-2 4.7-2 5.7.4.9 2.3-.9 4.8-5.7 8-4.8-3.2-6.6-5.7-5.7-8 1-2.4 4.3-2.4 5.7-.4z"/>
   </g>
+  <g id="icon-bolt" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 2.5L5 13.5h6l-1 8 8-11h-6l1-8z"/>
+  </g>
+  <g id="icon-cursor" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5.5 4l6.2 15 2-6.3 6.3-2z"/><path d="M13.7 12.7l5.3 5.3"/>
+  </g>
 </defs>
 </svg>
 
 <div id="deck">
 
+  <!-- Línea de pulso decorativa compartida (bajo los slides) -->
+  <svg class="ecg-line" viewBox="0 0 1800 60" preserveAspectRatio="none" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0,38 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h96 l7,-5 l6,-15 l8,30 l6,-17 l4,7 h200"/>
+  </svg>
+
   <!-- ================= SLIDE 1 — Dato brutal / apertura ================= -->
+  <!-- GUIÓN (~25 s): "Hoy, en cualquier clínica de Medellín, pasa lo mismo:
+       el médico atiende todo el día… y de noche sigue trabajando. No con
+       pacientes: con formularios. La evidencia dice que por cada hora de
+       contacto clínico se van casi dos horas en pantallas y registros.
+       Ese tiempo no se lo roba nadie más que la documentación." -->
   <section class="slide active" data-index="1">
     <div class="slide-inner">
       <div class="eyebrow">Capital Semilla 2026 · Ruta del Emprendimiento Medellín</div>
-      <h1 class="slide-title">El médico está perdiendo tiempo clínico frente al computador.</h1>
+      <h1 class="slide-title">El médico está perdiendo <span class="kw">tiempo clínico</span> frente al computador.</h1>
       <p class="lede">Por cada 1 hora con pacientes, casi 2 horas pueden irse en registros y tareas de escritorio.</p>
       <p class="source-note">Fuente: Sinsky et al., <em>Annals of Internal Medicine</em>, 2016 — médicos en consulta ambulatoria dedicaron 27,0% de su tiempo al contacto clínico directo y 49,2% a EHR/tareas de escritorio, con 1–2 horas adicionales cada noche en documentación. (pubmed.ncbi.nlm.nih.gov/27595430)</p>
 
       <div class="split-visual">
         <div class="split-half day">
           <div class="icon-plate lg"><svg><use href="#icon-stethoscope"/></svg></div>
-          <div class="split-caption"><b>Día</b><span>Médico atendiendo al paciente, con contacto real</span></div>
+          <div class="split-caption"><b>Día</b><span>Consulta tras consulta, con el paciente al frente</span></div>
         </div>
         <div class="split-half">
           <div class="icon-plate lg"><svg><use href="#icon-monitor"/></svg></div>
-          <div class="split-caption"><b>Noche</b><span>Mismo médico, llenando la historia clínica</span></div>
+          <div class="split-caption"><b>Noche</b><span>El mismo médico, a las 10 p.m., todavía llenando historias clínicas</span></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ================= SLIDE 2 — El problema real ================= -->
+  <!-- GUIÓN (~25 s): "Y esto no es solo cansancio del médico. El paciente
+       recibe una consulta más fría, y la clínica paga la cuenta: la mitad
+       del tiempo que compra con cada salario se le va en pantallas, no en
+       pacientes. Documentar mal o documentar lento cuesta plata todos
+       los meses." -->
   <section class="slide" data-index="2">
     <div class="slide-inner">
       <div class="eyebrow">El problema</div>
-      <h1 class="slide-title">El problema no es solo del médico. También lo siente el paciente.</h1>
+      <h1 class="slide-title">No es solo el médico. El costo lo paga todo el sistema.</h1>
       <div class="cols">
         <div class="col-card">
           <div class="icon-plate sm"><svg><use href="#icon-user"/></svg></div>
@@ -430,7 +630,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
           </ul>
         </div>
         <div class="col-card">
-          <div class="icon-plate sm"><svg><use href="#icon-user"/></svg></div>
+          <div class="icon-plate sm"><svg><use href="#icon-heart"/></svg></div>
           <h3>Paciente</h3>
           <ul>
             <li>Menos contacto visual.</li>
@@ -448,15 +648,72 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
           </ul>
         </div>
       </div>
+
+      <div class="stat-row">
+        <div class="stat"><span class="num">49,2%</span><span class="lbl">del tiempo del médico se va en EHR y tareas de escritorio</span></div>
+        <div class="stat"><span class="num">1–2 h</span><span class="lbl">adicionales cada noche terminando documentación</span></div>
+        <div class="stat"><span class="num">≈ $2M</span><span class="lbl">COP/mes del salario de cada médico pagados a tiempo de documentación</span></div>
+      </div>
+      <p class="source-note">Fuentes: Sinsky et al., Annals of Internal Medicine, 2016. Cifra en COP: estimación propia — 49,2% × salario promedio de médico general en Colombia ($3,9–4,2M COP/mes; Indeed y Computrabajo, 2025).</p>
     </div>
   </section>
 
-  <!-- ================= SLIDE 3 — La oportunidad ================= -->
+  <!-- ================= SLIDE 3 — Por qué ahora ================= -->
+  <!-- GUIÓN (~25 s): "¿Y por qué atacar esto ahora y no hace cinco años?
+       Porque tres fuerzas se cruzaron: la ley ya obliga a la historia
+       clínica electrónica interoperable, la IA de voz por fin alcanzó
+       calidad clínica a bajo costo, y el agotamiento médico está en
+       niveles récord. La ventana para construir esto es ahora." -->
   <section class="slide" data-index="3">
     <div class="slide-inner">
-      <div class="eyebrow">La oportunidad</div>
-      <h1 class="slide-title">La documentación clínica no va a desaparecer. Pero sí puede volverse más inteligente.</h1>
-      <p class="lede">Si reducimos el tiempo repetitivo de documentación, liberamos tiempo para la atención médica y mejoramos la productividad institucional.</p>
+      <div class="eyebrow">Por qué ahora</div>
+      <h1 class="slide-title">Tres fuerzas abrieron la ventana. <span class="kw">Ahora.</span></h1>
+      <div class="cols">
+        <div class="col-card">
+          <span class="idx">01</span>
+          <div class="icon-plate sm"><svg><use href="#icon-doc"/></svg></div>
+          <h3>La regulación empuja</h3>
+          <p class="card-body">La Ley 2015 de 2020 creó la historia clínica electrónica interoperable en Colombia, con plazo máximo de 5 años: digitalizar bien ya no es opcional para las IPS.</p>
+        </div>
+        <div class="col-card">
+          <span class="idx">02</span>
+          <div class="icon-plate sm"><svg><use href="#icon-bolt"/></svg></div>
+          <h3>La tecnología maduró</h3>
+          <p class="card-body">La IA de voz y lenguaje alcanzó calidad clínica en español, y su costo por consulta cae año tras año. Lo que era imposible en 2019 hoy corre en un consultorio.</p>
+        </div>
+        <div class="col-card">
+          <span class="idx">03</span>
+          <div class="icon-plate sm"><svg><use href="#icon-user"/></svg></div>
+          <h3>El agotamiento es récord</h3>
+          <p class="card-body">El 45,6% del personal médico en Colombia presenta síndrome de burnout. La carga documental es uno de sus motores principales.</p>
+        </div>
+      </div>
+      <p class="big-quote" style="margin-top:24px;">La documentación clínica no va a desaparecer. Pero sí puede dejar de consumir al médico.</p>
+      <p class="source-note">Fuentes: Ley 2015 de 2020 (funcionpublica.gov.co); prevalencia de burnout en personal médico de Latinoamérica 2013–2023, revisión sistemática (Colombia: 45,6%).</p>
+    </div>
+  </section>
+
+  <!-- ================= SLIDE 4 — La solución ================= -->
+  <!-- GUIÓN (~25 s): "Miracle documenta la consulta mientras el médico
+       atiende. Escucha la conversación y la convierte en historia clínica
+       estructurada: notas SOAP, resúmenes y planes de tratamiento listos
+       para revisar. El médico pasa de escribir todo… a solo revisar y
+       aprobar." -->
+  <section class="slide" data-index="4">
+    <div class="slide-inner">
+      <div class="eyebrow">La solución</div>
+      <h1 class="slide-title">Miracle documenta la consulta <span class="kw">mientras el médico atiende</span>.</h1>
+      <p class="lede">Escucha la conversación médico-paciente y la convierte en información clínica estructurada: notas SOAP, resúmenes y planes de tratamiento listos para revisar y aprobar.</p>
+
+      <div class="flow">
+        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-stethoscope"/></svg></div><span>Conversación</span></div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg></div>
+        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-chip"/></svg></div><span>IA</span></div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg></div>
+        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-doc"/></svg></div><span>Nota estructurada</span></div>
+        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg></div>
+        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-clipboard"/></svg></div><span>Historia clínica</span></div>
+      </div>
 
       <div class="ba-wrap">
         <div class="ba-box">
@@ -471,54 +728,155 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 4 — La solución ================= -->
-  <section class="slide" data-index="4">
+  <!-- ================= SLIDE 5 — Producto: cómo funciona ================= -->
+  <!-- GUIÓN (~30 s): "Y aquí está lo que nadie más hace: Miracle no le
+       entrega al médico un texto para que él lo copie al sistema. Miracle
+       toma el control del computador y diligencia la historia clínica
+       directamente en el software que la clínica ya usa. Un dispositivo
+       con micrófono dedicado captura la consulta; la IA estructura; y el
+       computador se opera solo. El médico únicamente revisa y aprueba." -->
+  <section class="slide" data-index="5">
     <div class="slide-inner">
-      <div class="eyebrow">La solución</div>
-      <h1 class="slide-title">Miracle documenta la consulta mientras el médico atiende.</h1>
-      <p class="lede">Miracle escucha la conversación médico-paciente y ayuda a convertirla en información clínica organizada, lista para ser revisada y utilizada por el médico.</p>
+      <div class="eyebrow">Cómo funciona</div>
+      <h1 class="slide-title">El médico deja de estar <span class="kw">pegado al computador</span>.</h1>
 
-      <div class="flow">
-        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-stethoscope"/></svg></div><span>Conversación</span></div>
-        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg></div>
-        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-chip"/></svg></div><span>IA</span></div>
-        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg></div>
-        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-doc"/></svg></div><span>Resumen clínico</span></div>
-        <div class="flow-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg></div>
-        <div class="flow-step"><div class="icon-plate"><svg><use href="#icon-clipboard"/></svg></div><span>Documentación</span></div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text">Un <b>dispositivo con micrófono dedicado</b> en el consultorio captura la conversación con calidad clínica.</div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text">La IA comprende la consulta y la <b>estructura como información clínica</b>: SOAP, resumen, plan.</div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><b>Miracle opera el computador del médico</b>: navega el sistema de historia clínica y diligencia los campos — sin integraciones, sin copiar y pegar.</div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text">El médico <b>revisa y aprueba</b>. La decisión clínica siempre es suya.</div></div>
+      </div>
+
+      <div class="pmv-grid">
+        <div class="note-mock">
+          <span class="nm-tag">Nota generada · ejemplo ilustrativo</span>
+          <p class="nm-line"><b>S</b> Paciente refiere cefalea de 3 días, pulsátil, sin fiebre…</p>
+          <p class="nm-line"><b>O</b> TA 118/76 · FC 72 · afebril · examen neurológico normal…</p>
+          <p class="nm-line"><b>A</b> Cefalea tensional. Sin signos de alarma…</p>
+          <p class="nm-line"><b>P</b> Analgesia, higiene del sueño, control en 7 días…</p>
+        </div>
+        <!-- PLACEHOLDER: reemplazar por captura real del PMV y video demo (60–90 s) -->
+        <div class="shot-placeholder">Captura del PMV<br>· pantalla de nota generada ·</div>
+        <div class="video-placeholder">▶ Video demo<br>Miracle diligenciando la historia clínica en vivo</div>
       </div>
     </div>
   </section>
 
-  <!-- ================= SLIDE 5 — Diferencial ================= -->
-  <section class="slide" data-index="5">
+  <!-- ================= SLIDE 6 — Competencia ================= -->
+  <!-- GUIÓN (~30 s): "Esta categoría acaba de ser validada con cifras
+       enormes: Abridge vale más de cinco mil millones de dólares, y aquí
+       mismo en Medellín, Telepatía levantó 42 millones con Andreessen
+       Horowitz. Eso demuestra que el mercado paga por esto. Nuestro
+       ángulo es el que nadie cubre: el dispositivo en el consultorio y
+       la historia clínica diligenciada de punta a punta en el sistema
+       que la clínica ya usa." -->
+  <section class="slide dense" data-index="6">
     <div class="slide-inner">
-      <div class="eyebrow">Diferencial</div>
-      <h1 class="slide-title">No somos un transcriptor. Somos documentación clínica inteligente.</h1>
+      <div class="eyebrow">Competencia</div>
+      <h1 class="slide-title">Una categoría validada — con un ángulo que <span class="kw">nadie cubre</span>.</h1>
 
-      <table class="compare">
-        <tr><th>Transcriptor común</th><th>Miracle</th></tr>
-        <tr><td>Convierte voz en texto</td><td class="col-miracle">Convierte consulta en información estructurada</td></tr>
-        <tr><td>Texto plano</td><td class="col-miracle">Datos clínicos organizados</td></tr>
-        <tr><td>Requiere edición manual</td><td class="col-miracle">Reduce trabajo repetitivo</td></tr>
-        <tr><td>Genérico</td><td class="col-miracle">Diseñado para flujo médico</td></tr>
-        <tr><td>Se queda en la nota</td><td class="col-miracle">Puede apoyar campos y documentación clínica</td></tr>
-      </table>
-      <p class="big-quote" style="margin-top:22px;">Mientras otros convierten voz en texto, Miracle convierte una consulta en información clínica accionable.</p>
+      <div class="table-scroll">
+        <table class="compare">
+          <tr>
+            <th></th>
+            <th class="col-miracle">Miracle</th>
+            <th>Telepatía</th>
+            <th>Dragon Copilot (Microsoft)</th>
+            <th>Scribes globales (Abridge · Nabla · Suki)</th>
+          </tr>
+          <tr>
+            <td>Español clínico LatAm</td>
+            <td class="col-miracle"><span class="yes">✓</span>Nativo</td>
+            <td><span class="yes">✓</span>Sí</td>
+            <td class="no">Notas generadas en inglés</td>
+            <td class="no">Inglés primero</td>
+          </tr>
+          <tr>
+            <td>Dispositivo de captura dedicado</td>
+            <td class="col-miracle"><span class="yes">✓</span>Uno por médico</td>
+            <td class="no">—</td>
+            <td class="no">—</td>
+            <td class="no">—</td>
+          </tr>
+          <tr>
+            <td>Cómo llega la nota al sistema</td>
+            <td class="col-miracle"><span class="yes">✓</span>Opera el HIS directamente, sin integración</td>
+            <td class="no">App / copiloto clínico</td>
+            <td class="no">Integración con EHRs de EE. UU.</td>
+            <td class="no">Integración Epic / EHRs de EE. UU.</td>
+          </tr>
+          <tr>
+            <td>Precio pensado para</td>
+            <td class="col-miracle"><span class="yes">✓</span>Clínicas e IPS de LatAm</td>
+            <td>LatAm</td>
+            <td class="no">USD 369/mes + USD 700 de implementación</td>
+            <td class="no">Contratos enterprise en EE. UU.</td>
+          </tr>
+          <tr>
+            <td>Foco</td>
+            <td class="col-miracle">Consultorio, clínicas e IPS de LatAm</td>
+            <td>LatAm (5 países)</td>
+            <td>Hospitales de EE. UU.</td>
+            <td>Sistemas de salud de EE. UU.</td>
+          </tr>
+        </table>
+      </div>
+
+      <p class="big-quote" style="margin-top:14px;">Abridge vale USD 5.300M. Telepatía —aquí en Medellín— levantó USD 42M. Nosotros entramos donde ellos no están.</p>
+      <p class="source-note">Comparación con información pública a julio de 2026 — TechCrunch (Abridge, jun 2025); El Colombiano (Telepatía/a16z, jul 2026); trydax.com y Lime Health (precio e idioma de Dragon Copilot).</p>
     </div>
   </section>
 
-  <!-- ================= SLIDE 6 — Clientes B2C / B2B ================= -->
-  <section class="slide" data-index="6">
+  <!-- ================= SLIDE 7 — Mercado ================= -->
+  <!-- GUIÓN (~25 s): "El mercado es enorme y crece al veinte por ciento
+       anual. Pero lo importante para esta etapa: la puerta de entrada
+       está en casa. Colombia tiene más de 137 mil médicos y casi once mil
+       IPS; solo Antioquia tiene cerca de 940. Ahí arrancan nuestros
+       pilotos." -->
+  <section class="slide" data-index="7">
+    <div class="slide-inner">
+      <div class="eyebrow">Mercado</div>
+      <h1 class="slide-title">Un mercado gigante — y la puerta de entrada está <span class="kw">en casa</span>.</h1>
+
+      <div class="funnel">
+        <div class="f-tier t1">
+          <div><span class="f-scope">TAM · Latinoamérica</span><div class="f-name">Salud digital en LatAm</div></div>
+          <div class="f-num">USD 12.800M → 66.400M</div>
+          <div class="f-sub">Tamaño 2024 y proyección 2033 · CAGR ≈ 20% anual</div>
+        </div>
+        <div class="f-tier t2">
+          <div><span class="f-scope">SAM · Colombia</span><div class="f-name">Documentación clínica asistida por IA</div></div>
+          <div class="f-num">137.700+ médicos · 10.839 IPS</div>
+          <div class="f-sub">Médicos activos (2023) e IPS habilitadas (91% privadas, jun 2025)</div>
+        </div>
+        <div class="f-tier t3">
+          <div><span class="f-scope">SOM · Antioquia primero</span><div class="f-name">Pilotos en Medellín y área metropolitana</div></div>
+          <div class="f-num">≈ 940 IPS</div>
+          <div class="f-sub">Consultorios, clínicas e IPS de alto volumen</div>
+        </div>
+      </div>
+
+      <p class="source-note">Fuentes: Market Data Forecast — Latin America Digital Health Market (USD 12,82 mil millones en 2024 → USD 66,4 mil millones en 2033, CAGR 20,05%); MinSalud 2023 (137.700+ médicos); REPS con corte a junio 2025 vía Consultorsalud/UNIPS (10.839 IPS); datos.gov.co — Prestadores de Salud Antioquia (129 públicas + 808 privadas + 3 mixtas).</p>
+    </div>
+  </section>
+
+  <!-- ================= SLIDE 8 — Clientes: modelo dual ================= -->
+  <!-- GUIÓN (~25 s): "¿A quién le vendemos? A los dos lados, y en ese
+       orden: el médico adopta Miracle porque le devuelve sus noches; la
+       clínica lo compra para todos sus médicos porque gana productividad
+       y calidad documental, con funcionalidades institucionales
+       adicionales. El médico abre la puerta. La institución escala el
+       ingreso." -->
+  <section class="slide" data-index="8">
     <div class="slide-inner">
       <div class="eyebrow">Nuestros clientes</div>
-      <h1 class="slide-title">El médico lo usa. La clínica lo compra.</h1>
+      <h1 class="slide-title">Un solo producto. <span class="kw">Dos motores</span> de crecimiento.</h1>
 
       <div class="cols">
         <div class="col-card">
           <div class="icon-plate sm"><svg><use href="#icon-user"/></svg></div>
-          <span class="tag">B2C</span>
-          <h3>El médico</h3>
+          <span class="tag">B2C · La puerta de entrada</span>
+          <h3>El médico adopta</h3>
           <ul>
             <li>Médicos y especialistas independientes.</li>
             <li>Consultorios propios.</li>
@@ -527,29 +885,34 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
         </div>
         <div class="col-card">
           <div class="icon-plate sm"><svg><use href="#icon-building"/></svg></div>
-          <span class="tag">B2B</span>
-          <h3>Clínicas e instituciones</h3>
+          <span class="tag">B2B · El motor de expansión</span>
+          <h3>La institución escala</h3>
           <ul>
             <li>Clínicas, IPS y centros médicos.</li>
-            <li>Consultorios con varios profesionales.</li>
-            <li>Directores médicos y gerentes que aprueban la compra.</li>
+            <li>Funcionalidades institucionales adicionales: administración de equipos y visibilidad de la documentación.</li>
+            <li>Directores médicos y gerentes aprueban la compra.</li>
           </ul>
         </div>
       </div>
-      <div class="chips" style="margin-top:26px;">
+      <div class="chips" style="margin-top:24px;">
         <span class="chip">Consultorios privados</span>
         <span class="chip">Clínicas pequeñas y medianas</span>
         <span class="chip">IPS de alto volumen</span>
         <span class="chip">Especialistas con documentación repetitiva</span>
       </div>
+      <p class="big-quote" style="margin-top:22px;">La adopción individual abre la puerta. El contrato institucional escala el ingreso.</p>
     </div>
   </section>
 
-  <!-- ================= SLIDE 7 — Modelo de negocio ================= -->
-  <section class="slide" data-index="7">
+  <!-- ================= SLIDE 9 — Modelo de negocio ================= -->
+  <!-- GUIÓN (~20 s): "El modelo es ingreso recurrente puro: pilotos pagos
+       para entrar sin fricción, suscripción mensual por médico, y planes
+       institucionales por número de usuarios. Empezamos controlado y
+       escalamos hacia contratos institucionales." -->
+  <section class="slide" data-index="9">
     <div class="slide-inner">
       <div class="eyebrow">Modelo de negocio</div>
-      <h1 class="slide-title">Cada médico y cada clínica generan ingreso recurrente.</h1>
+      <h1 class="slide-title">Cada médico y cada clínica generan <span class="kw">ingreso recurrente</span>.</h1>
 
       <div class="cols" style="margin-top:30px;">
         <div class="col-card" style="text-align:center;">
@@ -572,8 +935,49 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 8 — Equipo ================= -->
-  <section class="slide" data-index="8">
+  <!-- ================= SLIDE 10 — Defensibilidad ================= -->
+  <!-- GUIÓN (~25 s): "¿Por qué no nos copian mañana? Porque lo difícil no
+       es transcribir. Es el español clínico regional que mejora con cada
+       consulta, es operar cualquier sistema de historia clínica sin
+       integración —entramos donde otros necesitan meses—, y es el
+       dispositivo en el consultorio, que se vuelve parte del hábito
+       diario del médico. Y todo sobre una base de seguridad y
+       cumplimiento de datos en salud." -->
+  <section class="slide" data-index="10">
+    <div class="slide-inner">
+      <div class="eyebrow">Defensibilidad</div>
+      <h1 class="slide-title">Lo difícil no es transcribir. <span class="kw">Es todo lo demás.</span></h1>
+
+      <div class="cols">
+        <div class="col-card">
+          <div class="icon-plate sm"><svg><use href="#icon-repeat"/></svg></div>
+          <h3>Datos que mejoran el producto</h3>
+          <p class="card-body">Cada consulta documentada afina el español clínico regional del sistema. Más médicos → mejor producto → más médicos.</p>
+        </div>
+        <div class="col-card">
+          <div class="icon-plate sm"><svg><use href="#icon-cursor"/></svg></div>
+          <h3>Sin fricción de integración</h3>
+          <p class="card-body">Miracle opera el HIS que la clínica ya usa. Donde otros necesitan meses de integración, nosotros entramos el mismo día — y nos volvemos parte del flujo diario.</p>
+        </div>
+        <div class="col-card">
+          <div class="icon-plate sm"><svg><use href="#icon-mic"/></svg></div>
+          <h3>Presencia física en el consultorio</h3>
+          <p class="card-body">El dispositivo dedicado garantiza calidad de audio clínico y crea un hábito diario: un costo de cambio real frente a cualquier app.</p>
+        </div>
+      </div>
+
+      <div class="assure">
+        <div class="icon-plate sm"><svg><use href="#icon-shield"/></svg></div>
+        <p>Seguridad y protección de datos cubiertas desde el diseño, alineadas con la regulación colombiana para datos sensibles en salud.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SLIDE 11 — Equipo ================= -->
+  <!-- GUIÓN (~20 s): "Este es el equipo: desarrollo, IA y producto,
+       estrategia comercial, y legal con acceso al sector salud. Tenemos
+       la capacidad para construir, validar y vender esta solución." -->
+  <section class="slide" data-index="11">
     <div class="slide-inner">
       <div class="eyebrow">Equipo</div>
       <h1 class="slide-title">El equipo para construir, vender y validar en salud.</h1>
@@ -601,8 +1005,13 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 9 — Uso del incentivo ================= -->
-  <section class="slide" data-index="9">
+  <!-- ================= SLIDE 12 — Uso del incentivo ================= -->
+  <!-- GUIÓN (~25 s): "Con quince millones pasamos de un PMV funcional a
+       un piloto validado: infraestructura y licencias de IA, desarrollo
+       puntual, pruebas técnicas y de seguridad, mejor captura de audio, y
+       material comercial para conseguir los pilotos. El incentivo no
+       inicia esto desde cero: lo acelera." -->
+  <section class="slide" data-index="12">
     <div class="slide-inner">
       <div class="eyebrow">Uso del incentivo</div>
       <h1 class="slide-title">Con $15M pasaremos de PMV funcional a piloto validado.</h1>
@@ -620,13 +1029,17 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
-  <!-- ================= SLIDE 10 — Cierre ================= -->
-  <section class="slide" data-index="10">
+  <!-- ================= SLIDE 13 — Cierre ================= -->
+  <!-- GUIÓN (~20 s): "Miracle existe para devolverle tiempo clínico al
+       médico. Y hacia allá vamos: ser la infraestructura de IA para la
+       documentación clínica en Latinoamérica, empezando por Medellín.
+       Menos tiempo documentando. Más tiempo cuidando pacientes." -->
+  <section class="slide" data-index="13">
     <div class="slide-inner" style="text-align:center; display:flex; flex-direction:column; align-items:center;">
       <div class="icon-plate lg" style="margin-bottom:22px;"><svg><use href="#icon-heart"/></svg></div>
       <div class="eyebrow" style="display:flex;flex-direction:column;align-items:center;">Miracle · Capital Semilla 2026</div>
-      <h1 class="slide-title" style="max-width:18ch;">Queremos devolverle tiempo clínico al médico.</h1>
-      <p class="lede" style="max-width:42ch;">Con Capital Semilla, Miracle puede avanzar de un PMV funcional a un piloto validado con usuarios reales del sector salud.</p>
+      <h1 class="slide-title" style="max-width:24ch;">Queremos ser la <span class="kw">infraestructura de IA</span> para la documentación clínica en Latinoamérica.</h1>
+      <p class="lede" style="max-width:46ch;">Empezando por Medellín: con Capital Semilla, Miracle avanza de un PMV funcional a un piloto validado con médicos reales del sector salud.</p>
       <p class="closing-phrase">Menos tiempo documentando.<br>Más tiempo cuidando pacientes.</p>
     </div>
   </section>
@@ -636,11 +1049,13 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 <script>
 /* ============================================================
    Controlador de navegación del deck.
+   El total de slides se calcula solo: agregar o quitar un
+   <section class="slide"> no requiere tocar este código.
    ============================================================ */
-const TOTAL = 10;
+const slides = document.querySelectorAll('.slide');
+const TOTAL = slides.length;
 let current = 1;
 
-const slides = document.querySelectorAll('.slide');
 const dotsContainer = document.getElementById('dots');
 const counter = document.getElementById('slide-counter');
 const progressBar = document.getElementById('progress-bar');
@@ -656,9 +1071,13 @@ const dots = dotsContainer.querySelectorAll('button');
 function goTo(n){
   if(n < 1 || n > TOTAL) return;
   current = n;
-  slides.forEach(s => s.classList.toggle('active', Number(s.dataset.index) === current));
+  slides.forEach(s => {
+    const active = Number(s.dataset.index) === current;
+    s.classList.toggle('active', active);
+    s.setAttribute('aria-hidden', active ? 'false' : 'true');
+  });
   dots.forEach((d,i) => d.classList.toggle('active', i+1 === current));
-  counter.textContent = String(current).padStart(2,'0') + ' / ' + TOTAL;
+  counter.textContent = String(current).padStart(2,'0') + ' / ' + String(TOTAL).padStart(2,'0');
   progressBar.style.width = (current/TOTAL*100) + '%';
 }
 
@@ -667,6 +1086,11 @@ document.addEventListener('keydown', (e) => {
   if(e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); goTo(current-1); }
   if(e.key === 'Home'){ goTo(1); }
   if(e.key === 'End'){ goTo(TOTAL); }
+  /* F = pantalla completa para presentar */
+  if(e.key === 'f' || e.key === 'F'){
+    if(document.fullscreenElement){ document.exitFullscreen(); }
+    else{ document.documentElement.requestFullscreen(); }
+  }
 });
 
 // swipe support (mobile)
