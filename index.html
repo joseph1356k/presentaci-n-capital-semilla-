@@ -188,6 +188,9 @@ p.lede{
 .slide.dense h1.slide-title{ font-size: clamp(1.55rem, 2.8vw, 2.4rem); margin-bottom:10px; }
 .slide.dense .table-scroll{ margin-top:14px; }
 .slide.dense table.compare th, .slide.dense table.compare td{ padding: 9px 12px; font-size:.8rem; }
+.slide.dense table.invest{ margin-top:14px; }
+.slide.dense table.invest th, .slide.dense table.invest td{ padding: 8px 12px; font-size:.78rem; }
+.slide.dense table.invest tr.total-row td{ padding-top:10px; }
 .slide.dense .big-quote{ font-size: clamp(.98rem, 1.4vw, 1.22rem); max-width:62ch; }
 .slide.dense .source-note{ margin-top:8px; font-size:.68rem; }
 
@@ -396,6 +399,8 @@ table.invest th, table.invest td{ padding:12px 14px; font-size:.9rem; text-align
 table.invest tr:last-child td{ border-bottom:none; }
 table.invest th{ color:var(--gray); text-transform:uppercase; font-size:.72rem; letter-spacing:.06em; background:rgba(245,248,253,.7); }
 table.invest td.amount{ color:var(--blue); font-weight:700; white-space:nowrap; font-variant-numeric: tabular-nums; }
+table.invest tr.total-row td{ border-top:1.5px solid var(--blue-border); padding-top:14px; }
+table.invest tr.total-row td.amount{ color:var(--blue-deep); font-size:1rem; }
 
 /* closing slide */
 .closing-phrase{
@@ -1007,25 +1012,30 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 
   <!-- ================= SLIDE 12 — Uso del incentivo ================= -->
   <!-- GUIÓN (~25 s): "Con quince millones pasamos de un PMV funcional a
-       un piloto validado: infraestructura y licencias de IA, desarrollo
-       puntual, pruebas técnicas y de seguridad, mejor captura de audio, y
-       material comercial para conseguir los pilotos. El incentivo no
+       un piloto validado: asesoría DevOps para escalar el PMV, licencias y
+       créditos de IA para las pruebas técnicas, catorce dispositivos de
+       captura de audio, branding y producción audiovisual para la
+       validación comercial, y el registro de la marca. El incentivo no
        inicia esto desde cero: lo acelera." -->
-  <section class="slide" data-index="12">
+  <!-- Cifras oficiales del Plan de Inversión aprobado — Contrato
+       interadministrativo #4600107420 de 2026. -->
+  <section class="slide dense" data-index="12">
     <div class="slide-inner">
       <div class="eyebrow">Uso del incentivo</div>
       <h1 class="slide-title">Con $15M pasaremos de PMV funcional a piloto validado.</h1>
 
-      <!-- PLACEHOLDER: ajustar montos finales de cada categoría si cambian respecto al plan sugerido -->
       <table class="invest">
-        <tr><th>Inversión</th><th>Monto sugerido</th><th>Objetivo</th></tr>
-        <tr><td>Infraestructura, APIs y licencias IA</td><td class="amount">$4M–$5M</td><td>Mejorar estabilidad y precisión</td></tr>
-        <tr><td>Desarrollo técnico puntual</td><td class="amount">$4M–$5M</td><td>Robustecer la versión piloto</td></tr>
-        <tr><td>Pruebas técnicas y seguridad</td><td class="amount">$2M–$3M</td><td>Preparar validación en entorno médico</td></tr>
-        <tr><td>Captura de audio / hardware asociado</td><td class="amount">$2M</td><td>Mejorar calidad de entrada de audio</td></tr>
-        <tr><td>Material comercial y demo</td><td class="amount">Hasta $3M</td><td>Conseguir pilotos y validación comercial</td></tr>
+        <tr><th>Inversión</th><th>Monto aprobado</th><th>Objetivo</th></tr>
+        <tr><td>Asesoría técnica DevOps, escalabilidad y despliegue cloud</td><td class="amount">$4.000.000</td><td>Estabilidad y disponibilidad del PMV para pruebas reales</td></tr>
+        <tr><td>Licencia mensual de herramienta de IA</td><td class="amount">$400.000</td><td>Acelerar documentación técnica y pruebas</td></tr>
+        <tr><td>Créditos de API de IA para pruebas del PMV</td><td class="amount">$600.000</td><td>Validar precisión del flujo voz → IA → nota clínica</td></tr>
+        <tr><td>14 dispositivos de captura de audio (tipo Omi)</td><td class="amount">$5.000.000</td><td>Validar calidad de voz en escenarios reales</td></tr>
+        <tr><td>Marketing, branding y producción audiovisual</td><td class="amount">$4.000.000</td><td>Video demo y piezas para validar con médicos y clínicas</td></tr>
+        <tr><td>Registro y protección de la marca Miracle</td><td class="amount">$1.000.000</td><td>Proteger el nombre y los activos intangibles</td></tr>
+        <tr class="total-row"><td><b>Total</b></td><td class="amount"><b>$15.000.000</b></td><td></td></tr>
       </table>
       <p class="big-quote" style="margin-top:20px;">El incentivo no es para iniciar desde cero; es para acelerar una solución que ya está en desarrollo.</p>
+      <p class="source-note">Cifras del Plan de Inversión aprobado — Contrato interadministrativo #4600107420 de 2026.</p>
     </div>
   </section>
 
