@@ -55,10 +55,10 @@ body{
      transparentes y este degradado permanece estable entre
      transiciones (estilo Keynote). */
   background:
-    radial-gradient(1300px 900px at 10% -10%, rgba(0,113,227,0.10), transparent 60%),
-    radial-gradient(1200px 850px at 110% 115%, rgba(10,61,145,0.09), transparent 58%),
-    radial-gradient(900px 600px at 85% -5%, rgba(0,113,227,0.05), transparent 55%),
-    linear-gradient(180deg, #ffffff 0%, #f2f6fc 100%);
+    radial-gradient(1300px 900px at 10% -10%, rgba(0,113,227,0.15), transparent 62%),
+    radial-gradient(1200px 850px at 110% 115%, rgba(10,61,145,0.14), transparent 60%),
+    radial-gradient(900px 600px at 85% -5%, rgba(0,113,227,0.08), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #eef3fb 100%);
   color: var(--ink);
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
@@ -71,12 +71,25 @@ body{
    bordes para que no compita con el contenido. */
 #deck::before{
   content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
-  background-image: radial-gradient(circle, rgba(10,61,145,0.10) 1px, transparent 1.5px);
-  background-size: 30px 30px;
-  -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
-          mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 100%);
-  opacity:.5;
+  background-image: radial-gradient(circle, rgba(10,61,145,0.14) 1.2px, transparent 1.7px);
+  background-size: 28px 28px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 75% at 50% 45%, #000 35%, transparent 100%);
+          mask-image: radial-gradient(ellipse 80% 75% at 50% 45%, #000 35%, transparent 100%);
+  opacity:.6;
 }
+
+/* Marco tipo "viewfinder" — bezel fijo alrededor de todo el deck para
+   que el fondo blanco no se sienta vacío; acentos en las esquinas
+   refuerzan la identidad tecnológica sin competir con el contenido. */
+.frame{
+  position:fixed; inset:16px; z-index:1; pointer-events:none;
+  border:1px solid rgba(10,61,145,0.16); border-radius:26px;
+}
+.corner{ position:fixed; width:26px; height:26px; z-index:2; pointer-events:none; border:0 solid var(--blue); opacity:.5; }
+.corner.tl{ top:16px; left:16px; border-top-width:2.5px; border-left-width:2.5px; border-top-left-radius:12px; }
+.corner.tr{ top:16px; right:16px; border-top-width:2.5px; border-right-width:2.5px; border-top-right-radius:12px; }
+.corner.bl{ bottom:16px; left:16px; border-bottom-width:2.5px; border-left-width:2.5px; border-bottom-left-radius:12px; }
+.corner.br{ bottom:16px; right:16px; border-bottom-width:2.5px; border-right-width:2.5px; border-bottom-right-radius:12px; }
 
 /* Línea de pulso (ECG) — identidad salud, casi imperceptible.
    Vive pegada al borde inferior, dentro de la zona de reserva del
@@ -463,6 +476,10 @@ table.invest tr.total-row td.amount{ color:var(--blue-deep); font-size:1rem; }
   #logo-slot{ top:16px; left:18px; font-size:.8rem; }
   #slide-counter{ bottom:14px; right:18px; }
   #dots{ bottom:14px; }
+  .frame{ inset:8px; border-radius:18px; }
+  .corner{ width:18px; height:18px; }
+  .corner.tl, .corner.tr{ top:8px; } .corner.bl, .corner.br{ bottom:8px; }
+  .corner.tl, .corner.bl{ left:8px; } .corner.tr, .corner.br{ right:8px; }
 }
 
 /* focus visibility for keyboard users */
@@ -488,7 +505,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     height:100vh; min-height:100vh;
   }
   .slide::before, .slide::after{ display:none; }
-  #progress-bar, #dots, #slide-counter, .nav-zone, .nav-arrow{ display:none !important; }
+  #progress-bar, #dots, #slide-counter, .nav-zone, .nav-arrow, .frame, .corner{ display:none !important; }
   #logo-slot{ position:absolute; }
 }
 </style>
@@ -505,6 +522,12 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 <button class="nav-arrow" id="arrow-right" onclick="goTo(current+1)" aria-label="Siguiente">&#8594;</button>
 
 <div id="dots"></div>
+
+<div class="frame"></div>
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
 
 <!-- ============ ICONOS (sprite oculto, referenciados con <use>) ============ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
