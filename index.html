@@ -85,7 +85,9 @@ body{
   position:fixed; inset:16px; z-index:1; pointer-events:none;
   border:1px solid rgba(10,61,145,0.16); border-radius:26px;
 }
-.corner{ position:fixed; width:26px; height:26px; z-index:2; pointer-events:none; border:0 solid var(--blue); opacity:.5; }
+/* Kept short on purpose — must stay clear of the logo (top:28/left:36)
+   and the slide counter (bottom:28/right:38) at every breakpoint. */
+.corner{ position:fixed; width:16px; height:16px; z-index:2; pointer-events:none; border:0 solid var(--blue); opacity:.5; }
 .corner.tl{ top:16px; left:16px; border-top-width:2.5px; border-left-width:2.5px; border-top-left-radius:12px; }
 .corner.tr{ top:16px; right:16px; border-top-width:2.5px; border-right-width:2.5px; border-top-right-radius:12px; }
 .corner.bl{ bottom:16px; left:16px; border-bottom-width:2.5px; border-left-width:2.5px; border-bottom-left-radius:12px; }
@@ -467,7 +469,12 @@ table.invest tr.total-row td.amount{ color:var(--blue-deep); font-size:1rem; }
 
 /* responsive */
 @media (max-width: 820px){
-  .slide{ padding: 5vh 6vw; }
+  /* Móvil apila columnas en vertical, así que el contenido puede
+     superar la altura de pantalla — permitir scroll dentro del slide
+     en vez de centrarlo y recortarlo (que es lo que generaba texto
+     superpuesto con los puntos de navegación). */
+  .slide{ padding: 5vh 6vw; justify-content:flex-start; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+  .slide-inner{ margin-top:auto; margin-bottom:auto; }
   .cols, .ba-wrap, .pmv-grid, .split-visual, .flow, .stat-row, .mkt-row{ flex-direction:column; }
   .flow-arrow{ transform:rotate(90deg); padding:2px 0; align-self:center; }
   .mkt-arrow{ transform:rotate(90deg); padding:4px 0; }
@@ -477,7 +484,7 @@ table.invest tr.total-row td.amount{ color:var(--blue-deep); font-size:1rem; }
   #slide-counter{ bottom:14px; right:18px; }
   #dots{ bottom:14px; }
   .frame{ inset:8px; border-radius:18px; }
-  .corner{ width:18px; height:18px; }
+  .corner{ width:10px; height:10px; }
   .corner.tl, .corner.tr{ top:8px; } .corner.bl, .corner.br{ bottom:8px; }
   .corner.tl, .corner.bl{ left:8px; } .corner.tr, .corner.br{ right:8px; }
 }
