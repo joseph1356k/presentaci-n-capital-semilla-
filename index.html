@@ -103,11 +103,11 @@ body{
   position:absolute; inset:0;
   display:flex; flex-direction:column; justify-content:center; align-items:center;
   padding: 6vh 9vw 8.5vh;
-  opacity:0; transform: translateX(32px) scale(.985);
+  opacity:0; transform: translateX(64px) scale(.93);
   pointer-events:none;
-  transition: opacity .45s ease, transform .45s ease;
+  transition: opacity .5s ease, transform .55s cubic-bezier(.2,.9,.3,1);
 }
-.slide.active{ opacity:1; transform: translateX(0) scale(1); pointer-events:auto; transition-delay:.06s; }
+.slide.active{ opacity:1; transform: translateX(0) scale(1); pointer-events:auto; transition-delay:.05s; }
 
 /* Orbes decorativos por slide. */
 .slide::before, .slide::after{
@@ -588,37 +588,53 @@ body.backup-mode #dots{ opacity:.25; pointer-events:none; }
 body.backup-mode #backup-btn{ color:var(--blue); border-color:var(--blue); }
 
 /* ============================================================
-   MOVIMIENTO — revelado de contenido al entrar a cada slide
-   (estilo Keynote/PowerPoint: los bloques y las tarjetas
-   aparecen en secuencia). Se re-dispara cada vez que el slide
-   se vuelve activo, así que hay movimiento en cada visita.
+   MOVIMIENTO — animaciones de entrada enérgicas por slide.
+   Los elementos entran con "pop" (rebote), las barras crecen
+   desde 0 y los círculos del mercado hacen zoom uno por uno.
+   Se re-dispara cada vez que el slide se vuelve activo.
    ============================================================ */
-@keyframes rise{ from{ opacity:0; transform:translateY(18px); } to{ opacity:1; transform:none; } }
-@keyframes floaty{ from{ transform:translateY(0); } to{ transform:translateY(-7px); } }
+:root{ --spring: cubic-bezier(.34,1.56,.64,1); }
+@keyframes pop{ 0%{ opacity:0; transform:translateY(38px) scale(.9); } 60%{ opacity:1; } 100%{ opacity:1; transform:translateY(0) scale(1); } }
+@keyframes popIn{ 0%{ opacity:0; transform:scale(.6); } 70%{ opacity:1; } 100%{ opacity:1; transform:scale(1); } }
+@keyframes growX{ from{ transform:scaleX(0); } to{ transform:scaleX(1); } }
+@keyframes zoomRing{ 0%{ opacity:0; transform:translate(-50%,-50%) scale(0); } 70%{ opacity:1; } 100%{ opacity:1; transform:translate(-50%,-50%) scale(1); } }
+@keyframes floaty{ from{ transform:translateY(0); } to{ transform:translateY(-9px); } }
 
-/* bloques de primer nivel entran en secuencia */
-.slide.active .slide-inner > *:not(.stagger){ animation: rise .55s cubic-bezier(.2,.72,.2,1) both; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(1){ animation-delay:.05s; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(2){ animation-delay:.12s; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(3){ animation-delay:.19s; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(4){ animation-delay:.26s; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(5){ animation-delay:.33s; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(6){ animation-delay:.40s; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(7){ animation-delay:.47s; }
-.slide.active .slide-inner > *:not(.stagger):nth-child(8){ animation-delay:.54s; }
+/* bloques de primer nivel entran en secuencia (con rebote) */
+.slide.active .slide-inner > *:not(.stagger){ animation: pop .62s var(--spring) both; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(1){ animation-delay:.04s; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(2){ animation-delay:.13s; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(3){ animation-delay:.22s; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(4){ animation-delay:.31s; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(5){ animation-delay:.40s; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(6){ animation-delay:.49s; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(7){ animation-delay:.58s; }
+.slide.active .slide-inner > *:not(.stagger):nth-child(8){ animation-delay:.67s; }
 
-/* grupos de tarjetas: cascada elemento por elemento */
-.slide.active .stagger > *{ animation: rise .5s cubic-bezier(.2,.72,.2,1) both; }
-.slide.active .stagger > *:nth-child(1){ animation-delay:.24s; }
-.slide.active .stagger > *:nth-child(2){ animation-delay:.32s; }
-.slide.active .stagger > *:nth-child(3){ animation-delay:.40s; }
-.slide.active .stagger > *:nth-child(4){ animation-delay:.48s; }
-.slide.active .stagger > *:nth-child(5){ animation-delay:.56s; }
-.slide.active .stagger > *:nth-child(6){ animation-delay:.64s; }
-.slide.active .stagger > *:nth-child(7){ animation-delay:.72s; }
+/* grupos de tarjetas: cascada con rebote marcado */
+.slide.active .stagger > *{ animation: pop .58s var(--spring) both; }
+.slide.active .stagger > *:nth-child(1){ animation-delay:.22s; }
+.slide.active .stagger > *:nth-child(2){ animation-delay:.33s; }
+.slide.active .stagger > *:nth-child(3){ animation-delay:.44s; }
+.slide.active .stagger > *:nth-child(4){ animation-delay:.55s; }
+.slide.active .stagger > *:nth-child(5){ animation-delay:.66s; }
+.slide.active .stagger > *:nth-child(6){ animation-delay:.77s; }
+.slide.active .stagger > *:nth-child(7){ animation-delay:.88s; }
 
-/* flotación sutil del ícono de la demo */
-.slide.active .demo-play{ animation: rise .5s cubic-bezier(.2,.72,.2,1) both, floaty 3s ease-in-out 1s infinite alternate; }
+/* barras que crecen desde 0 (slide del dato) */
+.slide.active .bar-fill{ transform-origin:left center; animation: growX 1s cubic-bezier(.22,.7,.24,1) both; }
+.slide.active .bar-row:nth-child(1) .bar-fill{ animation-delay:.5s; }
+.slide.active .bar-row:nth-child(2) .bar-fill{ animation-delay:.78s; }
+
+/* círculos del mercado con zoom, uno por uno (el contenedor no hace pop) */
+.slide.active .market-viz.stagger > .bullseye{ animation:none; opacity:1; }
+.slide.active .bullseye .ring{ animation: zoomRing .62s var(--spring) both; }
+.slide.active .bullseye .ring.tam{ animation-delay:.28s; }
+.slide.active .bullseye .ring.sam{ animation-delay:.46s; }
+.slide.active .bullseye .ring.som{ animation-delay:.64s; }
+
+/* ícono de la demo: entra con pop y luego flota */
+.slide.active .demo-play{ animation: popIn .6s var(--spring) both, floaty 2.6s ease-in-out 1s infinite alternate; }
 
 /* ============================================================
    NOTAS DEL EXPOSITOR — panel estilo PowerPoint (tecla N / botón)
@@ -688,6 +704,8 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   .slide{ transition:none; }
   .slide::before, .slide::after{ animation:none; }
   .slide.active .slide-inner > *, .slide.active .stagger > *, .slide.active .demo-play{ animation:none !important; opacity:1 !important; transform:none !important; }
+  .slide.active .bar-fill{ animation:none !important; transform:none !important; }
+  .slide.active .bullseye .ring{ animation:none !important; opacity:1 !important; transform:translate(-50%,-50%) !important; }
 }
 
 /* ---------- impresión / exportar a PDF ---------- */
@@ -708,6 +726,8 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   #backup-btn, #backup-menu, #backup-flag, #notes-btn, #notes-drawer{ display:none !important; }
   #logo-slot{ position:absolute; }
   .slide.active .slide-inner > *, .slide.active .stagger > *, .slide.active .demo-play{ animation:none !important; opacity:1 !important; transform:none !important; }
+  .slide.active .bar-fill{ animation:none !important; transform:none !important; }
+  .slide.active .bullseye .ring{ animation:none !important; opacity:1 !important; transform:translate(-50%,-50%) !important; }
 }
 </style>
 </head>
