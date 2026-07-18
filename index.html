@@ -692,7 +692,10 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 
 /* ---------- impresión / exportar a PDF ---------- */
 @media print{
-  @page{ size: A4 landscape; margin: 0; }
+  /* Tamaño de página = proporción del diseño (16:10), para que cada
+     slide quepa en una sola página sin partirse. */
+  @page{ size: 1280px 800px; margin: 0; }
+  *{ -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   html, body{ overflow:visible; height:auto; background:#fff; }
   #deck{ width:auto; height:auto; }
   #deck::before, .ecg-line{ display:none; }
@@ -1177,13 +1180,13 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
           <div class="icon-plate sm"><svg><use href="#icon-clock"/></svg></div>
           <div class="kpi-name">Time Savings</div>
           <div class="kpi-desc">Horas administrativas que el médico deja de perder en documentación y registros.</div>
-          <div class="kpi-metric"><span class="kpi-est-tag">Proyección piloto</span><span class="kpi-line"><span class="kpi-val">≈ 40 h</span> <span class="unit">por médico / mes</span></span></div>
+          <div class="kpi-metric"><span class="kpi-est-tag">Proyección piloto</span><span class="kpi-line"><span class="kpi-val">20–30 h</span> <span class="unit">por médico / mes</span></span></div>
         </div>
         <div class="kpi-card">
           <div class="icon-plate sm"><svg><use href="#icon-trending"/></svg></div>
           <div class="kpi-name">Productivity ROI</div>
           <div class="kpi-desc">Capacidad clínica adicional que se genera gracias al tiempo recuperado.</div>
-          <div class="kpi-metric"><span class="kpi-est-tag">Proyección piloto</span><span class="kpi-line"><span class="kpi-val">+25%</span> <span class="unit">de capacidad clínica</span></span></div>
+          <div class="kpi-metric"><span class="kpi-est-tag">Proyección piloto</span><span class="kpi-line"><span class="kpi-val">+25–35%</span> <span class="unit">de capacidad clínica</span></span></div>
         </div>
       </div>
 
@@ -1381,8 +1384,8 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
           <h3>Negocio</h3>
           <ul>
             <li>Time Payback Period: <span class="est">&lt; 30 días</span></li>
-            <li>Time Savings: <span class="est">≈ 40 h / médico · mes</span></li>
-            <li>Productivity ROI: <span class="est">+25% capacidad</span></li>
+            <li>Time Savings: <span class="est">20–30 h / médico · mes</span></li>
+            <li>Productivity ROI: <span class="est">+25–35% capacidad</span></li>
           </ul>
         </div>
         <div class="col-card">
@@ -1503,7 +1506,7 @@ const NOTES_MAIN = [
     say:'Dos modelos: al médico independiente, acceso a Notes con planes según su uso; a la institución, propuesta a la medida con Notes + Operations según médicos, sedes y flujos. "El médico adopta la solución; la institución permite escalarla."',
     tip:'No des precios. Si preguntan cifras, di que cada propuesta se estructura según el cliente y remite al piloto. Suena a estrategia, no a que no sabes cuánto cobrar.' },
   { title:'Retorno medible', t:'≈ 40 s',
-    say:'Tres métricas de negocio con proyección: recuperar la inversión en menos de 30 días, ahorrar cerca de 40 horas por médico al mes, y sumar alrededor de 25% de capacidad clínica. Metas ancladas al 49,2% de tiempo que hoy se pierde en documentación.',
+    say:'Tres métricas de negocio con proyección: recuperar la inversión en menos de 30 días, ahorrar entre 20 y 30 horas por médico al mes, y sumar entre 25% y 35% de capacidad clínica. Metas ancladas al 49,2% de tiempo que hoy se pierde en documentación.',
     tip:'Preséntalas como PROYECCIONES/metas, no como resultados ya logrados. Si preguntan, aclara que se validan en el piloto: eso da rigor y evita que suenen infladas.' },
   { title:'Equipo', t:'≈ 30 s',
     say:'Presenta al equipo por capacidad, no solo por cargo: Christian (CEO) en dirección y desarrollo; José David (CTO) en IA y tecnología; Isabel (CMO) en estrategia comercial y ventas; Juan Pablo (CFO) en relaciones, contactos y finanzas. Cierra: "Tenemos la capacidad para construir, validar y vender la solución."',
@@ -1520,7 +1523,7 @@ const NOTES_BACKUP = [
     say:'Si mencionan a Abridge, Telepatía, Nabla, Suki o Dragon. Todos generan la nota; ninguno diligencia el HIS local sin integración ni trae un dispositivo dedicado.',
     tip:'El "—" significa "no es su oferta pública conocida", no un ataque sin evidencia. Reafirma que Operations es tu ángulo.' },
   { title:'Métricas del piloto', t:'Q&A',
-    say:'Metas proyectadas por área: negocio (payback < 30 días, ≈ 40 h/mes ahorradas, +25% capacidad), operación (≈ 6 min/consulta, adopción > 80%) y calidad (aceptación ≈ 95%, satisfacción ≈ 9/10).',
+    say:'Metas proyectadas por área: negocio (payback < 30 días, 20–30 h/mes ahorradas, +25–35% capacidad), operación (≈ 6 min/consulta, adopción > 80%) y calidad (aceptación ≈ 95%, satisfacción ≈ 9/10).',
     tip:'Son metas objetivo, no resultados. Si presionan, di que se confirman con datos reales del piloto.' },
   { title:'Seguridad y cumplimiento', t:'Q&A',
     say:'Si preguntan por datos sensibles: autorización del paciente, trazabilidad, revisión humana, la decisión clínica siempre del médico, alineación con la regulación colombiana.',
