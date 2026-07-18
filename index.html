@@ -700,13 +700,10 @@ body.notes-open #notes-btn{ color:var(--blue); border-color:var(--blue); }
 
 button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 
-@media (prefers-reduced-motion: reduce){
-  .slide{ transition:none; }
-  .slide::before, .slide::after{ animation:none; }
-  .slide.active .slide-inner > *, .slide.active .stagger > *, .slide.active .demo-play{ animation:none !important; opacity:1 !important; transform:none !important; }
-  .slide.active .bar-fill{ animation:none !important; transform:none !important; }
-  .slide.active .bullseye .ring{ animation:none !important; opacity:1 !important; transform:translate(-50%,-50%) !important; }
-}
+/* Nota: por pedido explícito (pitch presencial con mucho movimiento) las
+   animaciones se reproducen SIEMPRE, aunque el sistema tenga activada la
+   "reducción de movimiento". Por eso NO se suprimen aquí. La impresión a
+   PDF sí las desactiva (más abajo, en @media print). */
 
 /* ---------- impresión / exportar a PDF ---------- */
 @media print{
@@ -1590,7 +1587,6 @@ function render(){
    Cuentan desde 0 al valor objetivo cada vez que se entra al slide. */
 function animateCounts(slideEl){
   if(!slideEl) return;
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   slideEl.querySelectorAll('[data-count]').forEach(el => {
     const target = parseFloat(el.dataset.count);
     const dec = parseInt(el.dataset.decimals || '0', 10);
@@ -1599,7 +1595,6 @@ function animateCounts(slideEl){
     const fmt = v => v.toLocaleString('es-CO', { minimumFractionDigits: dec, maximumFractionDigits: dec }) + suffix;
     if(el._raf) cancelAnimationFrame(el._raf);
     if(el._to) clearTimeout(el._to);
-    if(reduce){ el.textContent = fmt(target); return; }
     el.textContent = fmt(0);
     el._to = setTimeout(() => {
       const dur = 1100;
