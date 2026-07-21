@@ -302,11 +302,11 @@ p.lede{
 .sys-panel.ops::before{ background: linear-gradient(90deg, var(--blue-deep), rgba(10,61,145,0)); }
 .sys-panel.ops{ background: var(--deep-tint); border-color: var(--blue-border); }
 .sys-head{ display:flex; align-items:center; gap:12px; margin-bottom:14px; }
-.sys-tag{ font-size:.68rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:2px; }
+.sys-tag{ font-size:.78rem; font-weight:700; letter-spacing:.11em; text-transform:uppercase; color:var(--blue); display:block; margin-bottom:3px; }
 .sys-panel.ops .sys-tag{ color: var(--blue-deep); }
-.sys-name{ font-size:1.1rem; font-weight:700; color:var(--ink); letter-spacing:-0.01em; }
+.sys-name{ font-size:1.42rem; font-weight:700; color:var(--ink); letter-spacing:-0.01em; }
 .sys-panel ul{ list-style:none; }
-.sys-panel li{ font-size:.92rem; line-height:1.55; color:var(--ink-soft); padding-left:16px; position:relative; margin-bottom:7px; }
+.sys-panel li{ font-size:1.14rem; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; margin-bottom:10px; }
 .sys-panel li::before{ content:""; position:absolute; left:0; top:.6em; width:6px; height:6px; border-radius:50%; background:var(--blue); }
 .sys-panel.ops li::before{ background: var(--blue-deep); }
 .sys-link{ align-self:center; flex-shrink:0; color:var(--blue); display:flex; align-items:center; justify-content:center; }
@@ -622,7 +622,7 @@ body.backup-mode #backup-btn{ color:var(--blue); border-color:var(--blue); }
 .slide.active .stagger > *:nth-child(7){ animation-delay:.88s; }
 
 /* barras que crecen desde 0 (slide del dato) */
-.slide.active .bar-fill{ transform-origin:left center; animation: growX 1s cubic-bezier(.22,.7,.24,1) both; }
+.slide.active .bar-fill{ transform-origin:left center; animation: growX 1.25s cubic-bezier(.22,.7,.24,1) both; }
 .slide.active .bar-row:nth-child(1) .bar-fill{ animation-delay:.5s; }
 .slide.active .bar-row:nth-child(2) .bar-fill{ animation-delay:.78s; }
 
@@ -1597,7 +1597,7 @@ function animateCounts(slideEl){
     if(el._to) clearTimeout(el._to);
     el.textContent = fmt(0);
     el._to = setTimeout(() => {
-      const dur = 1100;
+      const dur = 1375;
       const start = performance.now();
       const tick = now => {
         const t = Math.min(1, (now - start) / dur);
