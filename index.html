@@ -909,34 +909,6 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   </svg>
 
   <!-- ============================================================
-       SLIDE 1 — EL PROBLEMA (dato)  (~30 s)
-       GUIÓN: "Abrimos con el problema en un dato. En consulta ambulatoria,
-       solo el 27% de la jornada del médico es contacto directo con el
-       paciente; el 49,2% se va en la historia clínica y el trabajo de
-       escritorio: documentar, completar registros, navegar el sistema,
-       órdenes, administración. Por cada hora cara a cara, casi dos en el
-       sistema."
-       ============================================================ -->
-  <section class="slide active" data-index="1">
-    <div class="slide-inner">
-      <h1 class="slide-title">Casi la mitad de la jornada <span class="kw">no es el paciente</span>.</h1>
-
-      <div class="bars stagger">
-        <div class="bar-row">
-          <div class="bar-head"><span class="bar-val" data-count="27" data-suffix="%" data-delay="500">27%</span><span class="bar-cap">Interacción clínica directa con el paciente</span></div>
-          <div class="bar-track"><div class="bar-fill" style="width:27%"></div></div>
-        </div>
-        <div class="bar-row">
-          <div class="bar-head"><span class="bar-val accent" data-count="49.2" data-decimals="1" data-suffix="%" data-delay="780">49,2%</span><span class="bar-cap">Historia clínica electrónica (HCE) + trabajo de escritorio</span></div>
-          <div class="bar-track"><div class="bar-fill accent" style="width:49.2%"></div></div>
-        </div>
-      </div>
-
-      <p class="source-note">Sinsky et al. (2016), <em>Annals of Internal Medicine</em> — medición en consulta ambulatoria.</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
        SLIDE 2 — EL PROBLEMA (comparación 1h vs 2h)  (~20 s)
        GUIÓN: "Miremos esa misma idea de otra forma: por cada hora que el
        médico pasa con el paciente, casi dos horas se van en la historia
@@ -963,37 +935,6 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
 
       <p class="big-quote">Casi la mitad de la jornada médica se consume en el sistema.</p>
       <p class="source-note">Sinsky et al. (2016). <em>Annals of Internal Medicine</em>.</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       SLIDE 3 — EL PROBLEMA (5,9 h en la HCE)  (~20 s)
-       GUIÓN: "Y ese tiempo no es abstracto: en promedio, un médico pasa 5,9
-       horas al día dentro de la historia clínica electrónica, de una
-       jornada de 11,4 horas. Parte durante la consulta, parte después de
-       terminar de atender. El tiempo en el sistema no termina cuando
-       termina la consulta."
-       ============================================================ -->
-  <section class="slide" data-index="3">
-    <div class="slide-inner">
-      <h1 class="slide-title" style="margin-bottom:6px;">Gran parte de la jornada médica transcurre <span class="kw">dentro de la HCE</span>.</h1>
-
-      <div class="hero-single stagger" style="margin:8px 0 0; gap:4px;">
-        <span class="hero-num" data-count="5.9" data-decimals="1" data-suffix=" h" data-delay="450">5,9 h</span>
-        <span class="hero-sub">al día en la historia clínica electrónica</span>
-      </div>
-
-      <div class="bars stagger" style="max-width:580px; margin-top:0;">
-        <div class="bar-row">
-          <div class="bar-head"><span class="bar-cap">de una jornada de <b>11,4 h</b></span></div>
-          <div class="bar-track"><div class="bar-fill accent" style="width:51.75%"></div></div>
-        </div>
-      </div>
-
-      <p class="stat-line" style="margin-top:6px;"><span class="sl-num">4,5 h</span> durante la consulta <span class="sl-sep">·</span> <span class="sl-num">1,4 h</span> después del horario clínico</p>
-
-      <p class="big-quote" style="margin-top:10px;">El tiempo en el sistema no termina cuando termina la consulta.</p>
-      <p class="source-note">Arndt et al. (2017). <em>Annals of Family Medicine</em>.</p>
     </div>
   </section>
 
@@ -1536,6 +1477,46 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
     </div>
   </section>
 
+  <!-- RESPALDO — Dato 27% vs 49,2% -->
+  <section class="slide dense backup" data-backup="Dato: 27% vs 49,2%">
+    <div class="slide-inner">
+      <div class="eyebrow">Respaldo · El problema</div>
+      <h1 class="slide-title">Casi la mitad de la jornada <span class="kw">no es el paciente</span>.</h1>
+      <div class="bars stagger">
+        <div class="bar-row">
+          <div class="bar-head"><span class="bar-val" data-count="27" data-suffix="%" data-delay="500">27%</span><span class="bar-cap">Interacción clínica directa con el paciente</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:27%"></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-head"><span class="bar-val accent" data-count="49.2" data-decimals="1" data-suffix="%" data-delay="780">49,2%</span><span class="bar-cap">Historia clínica electrónica (HCE) + trabajo de escritorio</span></div>
+          <div class="bar-track"><div class="bar-fill accent" style="width:49.2%"></div></div>
+        </div>
+      </div>
+      <p class="source-note">Sinsky et al. (2016), <em>Annals of Internal Medicine</em> — medición en consulta ambulatoria.</p>
+    </div>
+  </section>
+
+  <!-- RESPALDO — Dato 5,9 h en la HCE -->
+  <section class="slide dense backup" data-backup="Dato: 5,9 h en la HCE">
+    <div class="slide-inner">
+      <div class="eyebrow">Respaldo · El problema</div>
+      <h1 class="slide-title" style="margin-bottom:6px;">Gran parte de la jornada médica transcurre <span class="kw">dentro de la HCE</span>.</h1>
+      <div class="hero-single stagger" style="margin:8px 0 0; gap:4px;">
+        <span class="hero-num" data-count="5.9" data-decimals="1" data-suffix=" h" data-delay="450">5,9 h</span>
+        <span class="hero-sub">al día en la historia clínica electrónica</span>
+      </div>
+      <div class="bars stagger" style="max-width:580px; margin-top:0;">
+        <div class="bar-row">
+          <div class="bar-head"><span class="bar-cap">de una jornada de <b>11,4 h</b></span></div>
+          <div class="bar-track"><div class="bar-fill accent" style="width:51.75%"></div></div>
+        </div>
+      </div>
+      <p class="stat-line" style="margin-top:6px;"><span class="sl-num">4,5 h</span> durante la consulta <span class="sl-sep">·</span> <span class="sl-num">1,4 h</span> después del horario clínico</p>
+      <p class="big-quote" style="margin-top:10px;">El tiempo en el sistema no termina cuando termina la consulta.</p>
+      <p class="source-note">Arndt et al. (2017). <em>Annals of Family Medicine</em>.</p>
+    </div>
+  </section>
+
 
 </div>
 
@@ -1568,15 +1549,9 @@ const backupMenu = document.getElementById('backup-menu');
    Editar libremente. "say" = lo que dices en voz alta;
    "tip" = recordatorio de énfasis / qué NO hacer. */
 const NOTES_MAIN = [
-  { title:'El problema', t:'≈ 30 s',
-    say:'Abre el número por dentro: solo el 27% de la jornada es contacto directo con el paciente, frente al 49,2% en historia clínica y trabajo de escritorio (documentar, completar registros, navegar el sistema, gestionar órdenes, administración). En una frase: por cada hora cara a cara, casi dos en el sistema.',
-    tip:'Deja que las barras hablen: es casi el doble. No leas toda la lista, nombra 2–3 ejemplos y sigue.' },
   { title:'El problema · 1h vs 2h', t:'≈ 20 s',
-    say:'Mira la misma idea de otra forma: por cada hora con el paciente, casi dos horas se van en la historia clínica y el trabajo de escritorio. Casi la mitad de la jornada se consume en el sistema, no en la consulta.',
-    tip:'Deja que los números grandes hablen solos — 1h vs 2h se entiende en segundos. No repitas los porcentajes del slide anterior, solo refuerza la idea.' },
-  { title:'El problema · 5,9 h en la HCE', t:'≈ 20 s',
-    say:'Y eso no es abstracto: en promedio, un médico pasa 5,9 horas al día dentro de la historia clínica, de una jornada de 11,4 horas. Parte durante la consulta (4,5 h), parte después de terminar de atender (1,4 h). El tiempo en el sistema no termina cuando termina la consulta.',
-    tip:'Este es el dato más "duro" y concreto de los tres — aterriza el problema en horas reales del día. Pausa después de decir "5,9 horas al día".' },
+    say:'Por cada hora con el paciente, casi dos horas se van en la historia clínica y el trabajo de escritorio: 27% interacción directa vs 49,2% en HCE y escritorio. Casi la mitad de la jornada se consume en el sistema, no en la consulta.',
+    tip:'Deja que los números grandes hablen solos — se entiende en segundos. Los datos ampliados (5,9h en HCE, etc.) están en respaldo por si preguntan.' },
   { title:'El impacto', t:'≈ 35 s',
     say:'Cuenta la historia desde el sentir de cada uno: el médico que se lleva trabajo a casa, el paciente que siente que le hablan al computador, y el hospital que nunca sabe si la historia clínica quedó completa. Remata: "nadie gana con la documentación manual".',
     tip:'Es storytelling, no una lista: lee cada frase despacio, como si fuera esa persona. Cierra con el puente hablado hacia Operations: "y el trabajo del médico no termina cuando escribe la nota".' },
@@ -1617,7 +1592,13 @@ const NOTES_BACKUP = [
     tip:'Son metas objetivo, no resultados. Si presionan, di que se confirman con datos reales del piloto.' },
   { title:'Seguridad y cumplimiento', t:'Q&A',
     say:'Si preguntan por datos sensibles: autorización del paciente, trazabilidad, revisión humana, la decisión clínica siempre del médico, alineación con la regulación colombiana.',
-    tip:'No prometas certificaciones que aún no tienes. "Desde el diseño, y se formaliza durante el piloto".' }
+    tip:'No prometas certificaciones que aún no tienes. "Desde el diseño, y se formaliza durante el piloto".' },
+  { title:'Dato: 27% vs 49,2%', t:'Q&A',
+    say:'Solo el 27% de la jornada es contacto directo con el paciente, frente al 49,2% en historia clínica y trabajo de escritorio.',
+    tip:'Deja que las barras hablen: es casi el doble.' },
+  { title:'Dato: 5,9 h en la HCE', t:'Q&A',
+    say:'En promedio, un médico pasa 5,9 horas al día dentro de la historia clínica, de una jornada de 11,4 horas: 4,5 h durante la consulta y 1,4 h después.',
+    tip:'El tiempo en el sistema no termina cuando termina la consulta.' }
 ];
 const ndTitle = document.getElementById('nd-title');
 const ndTime  = document.getElementById('nd-time');
