@@ -56,6 +56,7 @@
 
 *{ box-sizing:border-box; margin:0; padding:0; }
 html,body{ height:100%; }
+html{ font-size:108%; } /* escala toda la tipografía del deck (usa rem/clamp) */
 body{
   font-family: var(--font-main);
   background:
@@ -175,10 +176,11 @@ p.lede{
 .est{ color:var(--blue-deep); font-weight:700; white-space:nowrap; }
 
 /* Variante compacta para slides con mucho contenido (respaldo). */
-.slide.dense .eyebrow{ margin-bottom:8px; }
+.slide.dense{ padding-top:4vh; padding-bottom:5vh; }
+.slide.dense .eyebrow{ margin-bottom:6px; }
 .slide.dense h1.slide-title{ font-size: clamp(1.55rem, 2.8vw, 2.4rem); margin-bottom:10px; }
 .slide.dense .table-scroll{ margin-top:14px; }
-.slide.dense table.compare th, .slide.dense table.compare td{ padding: 9px 12px; font-size:.8rem; }
+.slide.dense table.compare th, .slide.dense table.compare td{ padding: 6px 12px; font-size:.8rem; line-height:1.25; }
 .slide.dense table.invest{ margin-top:14px; }
 .slide.dense table.invest th, .slide.dense table.invest td{ padding: 8px 12px; font-size:.78rem; }
 .slide.dense table.invest tr.total-row td{ padding-top:10px; }
@@ -236,9 +238,9 @@ p.lede{
 .feels{ margin-top:30px; }
 .feels .col-card{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:14px; padding:30px 24px; }
 .feels .icon-plate{ margin:0; }
-.feel-role{ font-size:.72rem; text-transform:uppercase; letter-spacing:.12em; font-weight:700; color:var(--blue); }
+.feel-role{ font-size:.84rem; text-transform:uppercase; letter-spacing:.12em; font-weight:700; color:var(--blue); }
 .feel-quote{
-  font-size: clamp(1.05rem, 1.65vw, 1.4rem); line-height:1.45; color:var(--blue-deep);
+  font-size: clamp(1.22rem, 1.95vw, 1.62rem); line-height:1.4; color:var(--blue-deep);
   font-weight:600; font-style:italic; letter-spacing:-0.01em; max-width:20ch;
 }
 
@@ -387,7 +389,7 @@ p.lede{
 .table-scroll{ width:100%; overflow-x:auto; margin-top:24px; border-radius:var(--radius); border:1px solid var(--hairline); background:var(--bg); box-shadow:var(--shadow); }
 table.compare{ width:100%; border-collapse:collapse; }
 table.compare.wide{ min-width:820px; }
-table.compare th, table.compare td{ padding: 12px 16px; text-align:left; font-size:.9rem; border-bottom: 1px solid var(--hairline); line-height:1.4; }
+table.compare th, table.compare td{ padding: 9px 16px; text-align:left; font-size:.9rem; border-bottom: 1px solid var(--hairline); line-height:1.3; }
 table.compare tr:last-child td{ border-bottom:none; }
 table.compare th{ color: var(--gray); font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; background:rgba(245,248,253,.7); }
 table.compare td:first-child, table.compare th:first-child{ color: var(--gray); font-weight:600; }
@@ -400,7 +402,7 @@ table.compare .no{ color:var(--gray); opacity:.75; }
 .kpi-row{ display:flex; gap:20px; width:100%; margin-top:28px; }
 .kpi-card{
   flex:1; border-radius: var(--radius); border:1px solid var(--hairline); background:var(--bg);
-  box-shadow: var(--shadow); padding: 24px 22px; display:flex; flex-direction:column; gap:12px;
+  box-shadow: var(--shadow); padding: 17px 20px; display:flex; flex-direction:column; gap:9px;
   position:relative; overflow:hidden;
 }
 .kpi-card::before{
@@ -441,7 +443,7 @@ table.compare .no{ color:var(--gray); opacity:.75; }
 
 /* mercado · bullseye TAM/SAM/SOM (círculos concéntricos + leyenda) */
 .market-viz{ display:flex; align-items:center; justify-content:center; gap: clamp(24px, 5vw, 60px); width:100%; margin-top:22px; flex-wrap:wrap; }
-.bullseye{ position:relative; width: clamp(240px, 36vh, 380px); aspect-ratio:1; flex-shrink:0; }
+.bullseye{ position:relative; width: clamp(220px, 32vh, 340px); aspect-ratio:1; flex-shrink:0; }
 .bullseye .ring{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); border-radius:50%; display:flex; flex-direction:column; align-items:center; text-align:center; }
 .bullseye .ring.tam{ width:100%; height:100%; background:var(--blue-tint); border:1px solid var(--blue-border); justify-content:flex-start; padding-top:3.5%; }
 .bullseye .ring.sam{ width:64%; height:64%; background:var(--blue-tint-strong); border:1px solid var(--blue); justify-content:flex-start; padding-top:4%; }
@@ -450,7 +452,7 @@ table.compare .no{ color:var(--gray); opacity:.75; }
 .bullseye .ring.som .ring-scope{ color:rgba(255,255,255,.9); }
 .ring-geo{ font-size:.8rem; font-weight:600; color:var(--ink); line-height:1.2; margin-top:1px; }
 .bullseye .ring.som .ring-geo{ color:#fff; }
-.market-legend{ display:flex; flex-direction:column; gap:16px; max-width:440px; }
+.market-legend{ display:flex; flex-direction:column; gap:11px; max-width:440px; }
 .ml-row{ display:flex; gap:13px; align-items:flex-start; text-align:left; }
 .ml-dot{ width:14px; height:14px; border-radius:4px; margin-top:4px; flex-shrink:0; }
 .ml-dot.tam{ background:var(--blue-tint-strong); border:1.5px solid var(--blue-border); }
@@ -470,14 +472,15 @@ table.compare .no{ color:var(--gray); opacity:.75; }
 
 /* ---------- slide 7: entrada a la demo ---------- */
 .demo-hero{ text-align:center; display:flex; flex-direction:column; align-items:center; gap:26px; }
-.demo-eyebrow{ font-size:.82rem; letter-spacing:.16em; text-transform:uppercase; color:var(--blue); font-weight:600; }
+.demo-eyebrow{ font-size:.98rem; letter-spacing:.16em; text-transform:uppercase; color:var(--blue); font-weight:600; }
 .demo-title{
   font-size: clamp(2.3rem, 5.4vw, 4.2rem); font-weight:700; letter-spacing:-0.025em;
   line-height:1.08; max-width:18ch; color:var(--ink);
 }
 .demo-title .kw{ display:inline; }
-.demo-sub{ font-size: clamp(1rem, 1.7vw, 1.35rem); color:var(--blue-deep); font-weight:600; letter-spacing:.01em; }
-.demo-play{ width:84px; height:84px; }
+.demo-sub{ font-size: clamp(1.14rem, 1.9vw, 1.5rem); color:var(--blue-deep); font-weight:600; letter-spacing:.01em; }
+.demo-play{ width:96px; height:96px; }
+.demo-play svg{ width:44px; height:44px; }
 .demo-play svg{ width:40px; height:40px; }
 
 /* team grid — tarjetas con ícono a la izquierda (categoría / nombre / rol) */
@@ -523,17 +526,17 @@ table.invest tr.total-row td.amount{ color:var(--blue-deep); font-size:1rem; }
 /* slide de presupuesto: tabla grande, ocupando más de la pantalla
    (más ancha vía el contenedor + filas más altas, con menos padding
    vertical de slide y título más compacto para no desbordar). */
-.budget-slide{ padding: 4.5vh 5vw 6vh; }
+.budget-slide{ padding: 2vh 5vw 3vh; }
 .budget-slide .slide-inner{ max-width: 1300px; }
-.budget-slide h1.slide-title{ font-size: clamp(1.5rem, 2.7vw, 2.35rem); margin-bottom:8px; max-width:34ch; }
-.budget-slide table.invest{ margin-top: 26px; }
+.budget-slide h1.slide-title{ font-size: clamp(1.5rem, 2.7vw, 2.35rem); margin-bottom:4px; max-width:34ch; }
+.budget-slide table.invest{ margin-top: 12px; }
 .budget-slide table.invest th{ font-size:.8rem; }
-.budget-slide table.invest th, .budget-slide table.invest td{ padding:13px 22px; font-size:1rem; }
+.budget-slide table.invest th, .budget-slide table.invest td{ padding:7px 22px; font-size:1rem; }
 .budget-slide table.invest td.amount{ font-size:1.06rem; }
-.budget-slide table.invest tr.total-row td{ padding-top:15px; }
+.budget-slide table.invest tr.total-row td{ padding-top:9px; }
 .budget-slide table.invest tr.total-row td.amount{ font-size:1.22rem; }
-.budget-slide .big-quote{ margin-top:20px; max-width:66ch; }
-.budget-slide .source-note{ margin-top:12px; }
+.budget-slide .big-quote{ margin-top:8px; max-width:66ch; }
+.budget-slide .source-note{ margin-top:6px; }
 
 /* ---------- chrome: logo / progress / nav ---------- */
 #logo-slot{
@@ -1046,9 +1049,9 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   <section class="slide" data-index="7">
     <div class="slide-inner">
       <div class="eyebrow">El diferencial</div>
-      <h1 class="slide-title">Otros generan una nota. <span class="kw">Miracle completa el flujo.</span></h1>
+      <h1 class="slide-title" style="margin-bottom:10px;">Otros generan una nota. <span class="kw">Miracle completa el flujo.</span></h1>
 
-      <div class="table-scroll">
+      <div class="table-scroll" style="margin-top:8px;">
         <table class="compare">
           <tr>
             <th>Etapa</th>
@@ -1083,7 +1086,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
         </table>
       </div>
 
-      <p class="big-quote">No somos solamente un asistente de documentación: somos una capa de automatización para la operación médica.</p>
+      <p class="big-quote" style="margin-top:8px;">No somos solamente un asistente de documentación: somos una capa de automatización para la operación médica.</p>
     </div>
   </section>
 
@@ -1096,9 +1099,9 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   <section class="slide" data-index="8">
     <div class="slide-inner">
       <div class="eyebrow">Mercado</div>
-      <h1 class="slide-title">Del mercado máximo al primer foco: <span class="kw">Medellín y Bogotá</span>.</h1>
+      <h1 class="slide-title" style="margin-bottom:10px;">Del mercado máximo al primer foco: <span class="kw">Medellín y Bogotá</span>.</h1>
 
-      <div class="market-viz stagger">
+      <div class="market-viz stagger" style="margin-top:4px;">
         <div class="bullseye">
           <div class="ring tam"><span class="ring-scope">TAM</span><span class="ring-geo">Europa y América</span></div>
           <div class="ring sam"><span class="ring-scope">SAM</span><span class="ring-geo">Colombia</span></div>
@@ -1148,9 +1151,9 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   <section class="slide" data-index="9">
     <div class="slide-inner">
       <div class="eyebrow">Modelos de negocio</div>
-      <h1 class="slide-title">Modelos adaptados a <span class="kw">médicos e instituciones</span>.</h1>
+      <h1 class="slide-title" style="margin-bottom:10px;">Modelos adaptados a <span class="kw">médicos e instituciones</span>.</h1>
 
-      <div class="cols stagger">
+      <div class="cols stagger" style="margin-top:6px;">
         <div class="col-card">
           <div class="icon-plate sm"><svg><use href="#icon-user"/></svg></div>
           <span class="tag">B2C · Médicos</span>
@@ -1175,8 +1178,8 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
         </div>
       </div>
 
-      <p class="big-quote">El médico adopta la solución. La institución permite escalarla.</p>
-      <p class="source-note">Cada propuesta se estructura según el tamaño, la operación y las necesidades del cliente.</p>
+      <p class="big-quote" style="margin-top:10px;">El médico adopta la solución. La institución permite escalarla.</p>
+      <p class="source-note" style="margin-top:8px;">Cada propuesta se estructura según el tamaño, la operación y las necesidades del cliente.</p>
     </div>
   </section>
 
@@ -1192,9 +1195,9 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   <section class="slide" data-index="10">
     <div class="slide-inner">
       <div class="eyebrow">Retorno medible</div>
-      <h1 class="slide-title">El valor de Miracle se mide en <span class="kw">tiempo recuperado y capacidad operativa</span>.</h1>
+      <h1 class="slide-title" style="margin-bottom:10px;">El valor de Miracle se mide en <span class="kw">tiempo recuperado y capacidad operativa</span>.</h1>
 
-      <div class="kpi-row stagger">
+      <div class="kpi-row stagger" style="margin-top:14px;">
         <div class="kpi-card">
           <div class="icon-plate sm"><svg><use href="#icon-target"/></svg></div>
           <div class="kpi-name">Time Payback Period</div>
@@ -1215,7 +1218,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
         </div>
       </div>
 
-      <p class="source-note">Proyecciones estimadas para el piloto, a partir del tiempo que hoy se pierde en documentación (49,2% de la jornada). Cifras objetivo que validaremos con datos reales de campo (ver respaldo · Métricas del piloto).</p>
+      <p class="source-note" style="margin-top:10px;">Proyecciones estimadas para el piloto, a partir del tiempo que hoy se pierde en documentación (49,2% de la jornada). Cifras objetivo que validaremos con datos reales de campo (ver respaldo · Métricas del piloto).</p>
     </div>
   </section>
 
@@ -1437,11 +1440,11 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
   </section>
 
   <!-- RESPALDO 5 — Seguridad y cumplimiento -->
-  <section class="slide backup" data-backup="Seguridad y cumplimiento">
+  <section class="slide dense backup" data-backup="Seguridad y cumplimiento">
     <div class="slide-inner">
       <div class="eyebrow">Respaldo · Seguridad y cumplimiento</div>
       <h1 class="slide-title">Datos sensibles de salud, tratados con cuidado desde el diseño.</h1>
-      <div class="cols stagger">
+      <div class="cols stagger" style="margin-top:14px;">
         <div class="col-card">
           <div class="icon-plate sm"><svg><use href="#icon-lock"/></svg></div>
           <h3>Protección de datos</h3>
@@ -1470,7 +1473,7 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
           </ul>
         </div>
       </div>
-      <div class="assure">
+      <div class="assure" style="margin-top:14px; padding:12px 20px;">
         <div class="icon-plate sm"><svg><use href="#icon-shield"/></svg></div>
         <p>Seguridad y cumplimiento se abordan desde el diseño y se formalizan durante el piloto. No declaramos certificaciones que aún no tengamos.</p>
       </div>
