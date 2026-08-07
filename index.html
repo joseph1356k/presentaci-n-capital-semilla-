@@ -527,17 +527,17 @@ table.invest tr.total-row td.amount{ color:var(--blue-deep); font-size:1rem; }
 /* slide de presupuesto: tabla grande, ocupando más de la pantalla
    (más ancha vía el contenedor + filas más altas, con menos padding
    vertical de slide y título más compacto para no desbordar). */
-.budget-slide{ padding: 2vh 5vw 3vh; }
+.budget-slide{ padding: 1.5vh 5vw 2.5vh; }
 .budget-slide .slide-inner{ max-width: 1300px; }
-.budget-slide h1.slide-title{ font-size: clamp(1.5rem, 2.7vw, 2.35rem); margin-bottom:4px; max-width:34ch; }
-.budget-slide table.invest{ margin-top: 12px; }
-.budget-slide table.invest th{ font-size:.8rem; }
-.budget-slide table.invest th, .budget-slide table.invest td{ padding:7px 22px; font-size:1rem; }
-.budget-slide table.invest td.amount{ font-size:1.06rem; }
-.budget-slide table.invest tr.total-row td{ padding-top:9px; }
-.budget-slide table.invest tr.total-row td.amount{ font-size:1.22rem; }
-.budget-slide .big-quote{ margin-top:8px; max-width:66ch; }
-.budget-slide .source-note{ margin-top:6px; }
+.budget-slide h1.slide-title{ font-size: clamp(1.3rem, 2.3vw, 2rem); margin-bottom:2px; max-width:34ch; }
+.budget-slide table.invest{ margin-top: 8px; }
+.budget-slide table.invest th{ font-size:.7rem; }
+.budget-slide table.invest th, .budget-slide table.invest td{ padding:3px 18px; font-size:.86rem; }
+.budget-slide table.invest td.amount{ font-size:.92rem; }
+.budget-slide table.invest tr.total-row td{ padding-top:5px; }
+.budget-slide table.invest tr.total-row td.amount{ font-size:1.05rem; }
+.budget-slide .big-quote{ margin-top:5px; max-width:70ch; font-size: clamp(.9rem, 1.3vw, 1.1rem); }
+.budget-slide .source-note{ margin-top:3px; }
 
 /* ---------- chrome: logo / progress / nav ---------- */
 #logo-slot{
@@ -1293,8 +1293,11 @@ button:focus-visible{ outline: 2px solid var(--blue); outline-offset:2px; }
         <tr><td>Asesoría técnica DevOps, escalabilidad y despliegue cloud</td><td class="amount">$4.000.000</td><td>Estabilidad y disponibilidad del PMV para pruebas reales</td></tr>
         <tr><td>Licencia mensual de herramienta de IA</td><td class="amount">$400.000</td><td>Acelerar documentación técnica y pruebas</td></tr>
         <tr><td>Créditos de API de IA para pruebas del PMV</td><td class="amount">$600.000</td><td>Validar precisión del flujo voz → IA → nota clínica</td></tr>
-        <tr><td>14 dispositivos de captura de audio (tipo Omi)</td><td class="amount">$5.000.000</td><td>Validar calidad de voz en escenarios reales</td></tr>
-        <tr><td>Marketing, branding y producción audiovisual</td><td class="amount">$4.000.000</td><td>Video demo y piezas para validar con médicos y clínicas</td></tr>
+        <tr><td>13 dispositivos de captura de audio (tipo Omi)</td><td class="amount">$4.100.000</td><td>Validar calidad de voz en escenarios reales</td></tr>
+        <tr><td>Suscripción mensual de los dispositivos Omi</td><td class="amount">$650.000</td><td>Transcripción en la nube durante el piloto</td></tr>
+        <tr><td>Créditos/tokens de IA para los dispositivos</td><td class="amount">$250.000</td><td>Procesamiento adicional de audio y consultas</td></tr>
+        <tr><td>Branding</td><td class="amount">$2.000.000</td><td>Reconstruir y mejorar el branding de la marca</td></tr>
+        <tr><td>Marketing</td><td class="amount">$2.000.000</td><td>Contratar una persona de marketing por 1 mes</td></tr>
         <tr><td>Registro y protección de la marca Miracle</td><td class="amount">$1.000.000</td><td>Proteger el nombre y los activos intangibles</td></tr>
         <tr class="total-row"><td><b>Total</b></td><td class="amount"><b>$15.000.000</b></td><td></td></tr>
       </table>
@@ -1581,7 +1584,7 @@ const NOTES_MAIN = [
     say:'Presenta al equipo por capacidad, no solo por cargo: Christian (CEO) en dirección y desarrollo; José David (CTO) en IA y tecnología; Isabel (CMO) en estrategia comercial y ventas; Juan Pablo (CFO) en relaciones, contactos y finanzas. Cierra: "Tenemos la capacidad para construir, validar y vender la solución."',
     tip:'Nombra a cada uno mirando al jurado, sin leer los roles palabra por palabra. Da paso a la inversión con seguridad.' },
   { title:'Uso de Capital Semilla', t:'≈ 45 s',
-    say:'Y para cerrar, en qué se invierte el incentivo. Con los 15 millones no arrancamos de cero: aceleramos. Recorre los rubros grandes sin leerlos todos: asesoría DevOps para estabilizar el PMV, 14 dispositivos de captura para validar en campo, y branding/audiovisual para las demostraciones. Remata: "el incentivo no es para iniciar desde cero, sino para acelerar una solución que ya está en desarrollo".',
+    say:'Y para cerrar, en qué se invierte el incentivo. Con los 15 millones no arrancamos de cero: aceleramos. Recorre los rubros grandes sin leerlos todos: asesoría DevOps para estabilizar el PMV, 13 dispositivos de captura con su suscripción y créditos para validar en campo, y branding y marketing por separado. Remata: "el incentivo no es para iniciar desde cero, sino para acelerar una solución que ya está en desarrollo".',
     tip:'No leas la tabla renglón por renglón: señala 2–3 rubros clave y su porqué. La cifra total ($15M) y el contrato dan credibilidad. Este es el cierre del pitch: agradece al final.' }
 ];
 const NOTES_BACKUP = [
